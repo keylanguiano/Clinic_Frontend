@@ -1,0 +1,29 @@
+{
+  "UiUserAlert": {
+    "description": "Auto imported from components/ui/UserAlert.vue"
+  },
+  "UiUserDoctor": {
+    "description": "Auto imported from components/ui/UserDoctor.vue"
+  },
+  "UiUserLogin": {
+    "description": "Auto imported from components/ui/UserLogin.vue"
+  },
+  "UiUserPrescription": {
+    "description": "Auto imported from components/ui/UserPrescription.vue"
+  },
+  "UiUserProgressCircular": {
+    "description": "Auto imported from components/ui/UserProgressCircular.vue"
+  },
+  "UiUserSchedule": {
+    "description": "Auto imported from components/ui/UserSchedule.vue"
+  },
+  "UiUserSearch": {
+    "description": "Auto imported from components/ui/UserSearch.vue"
+  },
+  "UiUserSignup": {
+    "description": "Auto imported from components/ui/UserSignup.vue"
+  },
+  "UiUserUpdate": {
+    "description": "Auto imported from components/ui/UserUpdate.vue"
+  }
+}
