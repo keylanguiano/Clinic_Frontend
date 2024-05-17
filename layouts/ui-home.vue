@@ -5,7 +5,7 @@
                 <img src="../assets/logo.png" width="80%"/>
             </v-sheet>
 
-            <v-list class="ml-2">
+            <v-list class="ml-2 v-navigation-drawer-list">
                 <v-list-item color="#ffe7db" v-for="(item, index) in links" :key="index" :to="item.route" link :class="{ 'selected': selectedIndex === index }" @click="selectItem (index)">
                     <v-list-item-icon class="pl-3">
                         <img :src="selectedIndex === index ? item.icon_selected : item.icon" height="35px"/>
@@ -17,8 +17,8 @@
                 </v-list-item>
             </v-list>
 
-            <v-sheet color="transparent" class="d-flex ma-0 pa-0 justify-center align-center" width="100%" height="250px" style="position: absolute; bottom: 0; left: 0;">
-                <v-col>
+            <v-sheet color="transparent" class="d-flex ma-0 pa-0 justify-center align-center v-navigation-drawer-footer" width="100%" height="200">
+                <v-col class="ma-0 pa-0">
                     <v-row class="pa-0 ma-0" justify="center" align="center">
                         <v-avatar color="#000" size="100"></v-avatar>
                     </v-row>

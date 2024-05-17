@@ -116,12 +116,10 @@ export default {
                 email: this.email_login,
                 password: this.password_login
             }
-
             await this.$auth.loginWith('local', {
                 data: sendData
             }).then(async (res) => {
                 const result = await res.data
-
                 if (result.message === 'Success') {
                     console.log('@ Keyla => Result ', result.message)
 
@@ -134,7 +132,7 @@ export default {
                     console.log('@ Keyla => Token ', result.token)
 
                     setTimeout(() => {
-                        this.$router.push('/home')
+                        this.$router.push('/dashboard')
                     }, 3000)
                 }
             }).catch((err) => {

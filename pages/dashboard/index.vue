@@ -1,12 +1,30 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div class="ma-0 pa-0">
-        <v-col class="ma-0 pa-2">
+        <v-col class="ma-0 pa-1 pl-3 pr-3">
             <v-row class="ma-0 pa-0">
-                <v-text-field rounded label="Search" outlined />
+                <user-search />
+
+                <v-col cols="2" class="ma-0 pa-0">
+                    <v-row class="ma-0 pa-0">
+                        <v-col class="ma-0 pa-0">
+                            <v-btn rounded color="#ffaa92" class="ma-0 pa-5 pt-7 pb-7">
+                                <p class="ma-0 pa-0 button-secondary">Log In</p>
+                            </v-btn>
+                        </v-col>
+
+                        <v-col cols="1" class="ma-0 pa-0" />
+
+                        <v-col class="ma-0 pa-0">
+                            <v-btn rounded color="#ffaa92" class="ma-0 pa-5 pt-7 pb-7">
+                                <p class="ma-0 pa-0 button-secondary">Sign Up</p>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-col>
             </v-row>
 
-            <v-row class="block_dashboard ma-0 pa-0 mt-4 pt-3 pb-3" justify="center" align="center">
+            <v-row class="block_dashboard ma-0 pa-0 pt-3 pb-3 mt-10" justify="center" align="center">
                 <v-col class="ma-0 pa-0 ml-3" cols="1" justify="center" align="center">
                     <img class="ma-0 pa-0" src="../../assets/home/dashboard/alert.svg" />
                 </v-col>
@@ -30,7 +48,7 @@
                 </v-col>
             </v-row>
 
-            <v-row class="ma-0 pa-0 mt-7">
+            <v-row class="ma-0 pa-0 mt-10">
                 <v-col class="ma-0 pa-0">
                     <v-row class="ma-0 pa-0">
                         <v-col cols="4"  class="ma-0 pa-0">
@@ -234,8 +252,8 @@
                 </v-col>
             </v-row>
 
-            <v-row class="ma-0 pa-0 mt-7">
-                <v-col class="ma-0 pa-0 mt-7">
+            <v-row class="ma-0 pa-0 mt-10">
+                <v-col class="ma-0 pa-0">
                     <v-row class="ma-0 pa-0">
                         <v-col cols="4" class="ma-0 pa-0">
                             <v-row class="ma-0 pa-0">
