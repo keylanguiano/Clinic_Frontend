@@ -8,6 +8,9 @@
   "UiUserLogin": {
     "description": "Auto imported from components/ui/UserLogin.vue"
   },
+  "UiUserMedicine": {
+    "description": "Auto imported from components/ui/UserMedicine.vue"
+  },
   "UiUserPrescription": {
     "description": "Auto imported from components/ui/UserPrescription.vue"
   },
@@ -19,9 +22,6 @@
   },
   "UiUserSearch": {
     "description": "Auto imported from components/ui/UserSearch.vue"
-  },
-  "UiUserSignup": {
-    "description": "Auto imported from components/ui/UserSignup.vue"
   },
   "UiUserUpdate": {
     "description": "Auto imported from components/ui/UserUpdate.vue"

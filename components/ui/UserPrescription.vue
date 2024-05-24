@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="ma-0 pa-0">
         <v-row class="ma-0 pa-0">
             <v-col class="ma-0 pa-5 pl-7 pr-7 patients-prescription-row">
                 <v-row class="ma-0 pa-0">
@@ -22,7 +22,7 @@
                     </v-col>
                 </v-row>
 
-                <v-row class="ma-0 pa-0 mt-3">
+                <v-row class="ma-0 pa-0 mt-2">
                     <p id="patients_prescription_indication" class="ma-0 pa-0 patients-prescription-indication">Codeino linctus (g/5gal) x 400 MI To be taken as directed</p>
                 </v-row>
             </v-col>
