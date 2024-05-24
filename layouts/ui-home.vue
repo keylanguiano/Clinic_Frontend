@@ -35,7 +35,7 @@
         </v-navigation-drawer>
 
         <v-main style="background-color: #fff6f1 !important;">
-            <v-container class="py-8 px-6" fluid>
+            <v-container class="ma-0 pa-0" fluid>
                 <Nuxt />
             </v-container>
         </v-main>

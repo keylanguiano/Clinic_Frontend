@@ -1,25 +1,55 @@
 <template>
-    <div class="ma-0 pa-0" justify="center" align="center">
-        <v-progress-circular class="ma-0 pa-0" :rotate="180" :size="100" :width="10" :value="value" color="#874C96">
-            {{ value }} %
+    <div class="ma-0 pa-0 d-flex flex-column align-center justify-center">
+        <v-progress-circular
+            id="my-progress-circular"
+            class="ma-0 pa-0"
+            :rotate="180"
+            :value="percentage"
+            :size="100"
+            :width="10"
+            :style="{ '--progress-color': color }">
+            {{ data }}
         </v-progress-circular>
 
-        <v-row class="ma-0 pa-0 mt-2" justify="center" align="center">
-            <p class="ma-0 pa-0">81 / 72</p>
+        <v-row class="ma-0 pa-0 mt-2 align-center justify-center">
+            <p class="ma-0 pa-0 progress-circular-value">{{ value }}</p>
         </v-row>
 
-        <v-row class="ma-0 pa-0" justify="center" align="center">
-            <p class="ma-0 pa-0">Sugar</p>
+        <v-row class="ma-0 pa-0 align-center justify-center">
+            <p class="ma-0 pa-0 progress-circular-topic">{{ topic }}</p>
         </v-row>
     </div>
 </template>
 
 <script>
 export default {
-    data () {
-        return {
-            value: 80
+    props: {
+        percentage: {
+            type: Number,
+            default: 0
+        },
+        color: {
+            type: String,
+            default: ''
+        },
+        value: {
+            type: String,
+            default: ''
+        },
+        topic: {
+            type: String,
+            default: ''
+        },
+        data: {
+            type: String,
+            default: ''
         }
     }
 }
 </script>
+
+<style>
+.v-progress-circular__overlay {
+    stroke: var(--progress-color) !important;
+}
+</style>

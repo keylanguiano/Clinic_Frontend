@@ -1,5 +1,3 @@
-// En el archivo store se colocan las variables globales con estado inicial y mutaciones
-
 export const state = () => ({
     user: null,
     token: null
@@ -11,5 +9,15 @@ export const mutations = {
     },
     setToken (state, token) {
         state.token = token
+    },
+    clearUser (state) {
+        state.user = null
+        state.token = null
     }
+}
+
+export const getters = {
+    isAuthenticated: state => !!state.user,
+    getUser: state => state.user,
+    getToken: state => state.token
 }
