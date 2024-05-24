@@ -18,7 +18,7 @@ export default {
             { name: 'format-detection', content: 'telephone=no' }
         ],
         link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+            { rel: 'icon', type: 'image/x-icon' }
         ]
     },
 
@@ -75,11 +75,11 @@ export default {
                 },
                 endpoints: {
                     login: {
-                        url: '/login',
+                        url: '/login-doctor',
                         method: 'post'
                     },
                     logout: {
-                        url: '/logout',
+                        url: '/',
                         method: 'post'
                     },
                     user: false
@@ -117,5 +117,17 @@ export default {
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {
+        extend (config) {
+            config.module.rules.push({
+                test: /\.js$/,
+                include: /node_modules\/jose/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            })
+        }
     }
 }

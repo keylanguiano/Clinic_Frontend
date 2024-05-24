@@ -1,12 +1,31 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+
 <template>
     <div class="ma-0 pa-0">
-        <v-col class="ma-0 pa-2">
-            <v-row class="ma-0 pa-0">
-                <v-text-field rounded label="Search" outlined />
+        <v-col class="ma-0 pa-0 pl-10 pr-10">
+            <v-row class="ma-0 pa-0 mt-10">
+                <user-search class="ma-0 pa-0" />
+
+                <v-col cols="2" class="ma-0 pa-0">
+                    <v-row class="ma-0 pa-0">
+                        <v-col class="ma-0 pa-0">
+                            <v-btn rounded color="#ffaa92" class="ma-0 pa-5 pt-7 pb-7">
+                                <p class="ma-0 pa-0 button-secondary">Log In</p>
+                            </v-btn>
+                        </v-col>
+
+                        <v-col cols="1" class="ma-0 pa-0" />
+
+                        <v-col class="ma-0 pa-0">
+                            <v-btn rounded color="#ffaa92" class="ma-0 pa-5 pt-7 pb-7">
+                                <p class="ma-0 pa-0 button-secondary">Sign Up</p>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-col>
             </v-row>
 
-            <v-row class="block_dashboard ma-0 pa-0 mt-4 pt-3 pb-3" justify="center" align="center">
+            <v-row class="block-dashboard ma-0 pa-0 pt-3 pb-3 mt-6" justify="center" align="center">
                 <v-col class="ma-0 pa-0 ml-3" cols="1" justify="center" align="center">
                     <img class="ma-0 pa-0" src="../../assets/home/dashboard/alert.svg" />
                 </v-col>
@@ -30,54 +49,54 @@
                 </v-col>
             </v-row>
 
-            <v-row class="ma-0 pa-0 mt-7">
+            <v-row class="ma-0 pa-0 mt-5">
                 <v-col class="ma-0 pa-0">
                     <v-row class="ma-0 pa-0">
                         <v-col cols="4"  class="ma-0 pa-0">
                             <v-row class="ma-0 pa-0">
-                                <p class="ma-0 pa-0 subtitle_dashboard">Appointment</p>
+                                <p class="ma-0 pa-0 dashboard-subtitle">Appointment</p>
                             </v-row>
                         </v-col>
 
                         <v-col class="ma-0 pa-0 ml-5">
                             <v-row class="ma-0 pa-0">
-                                <p class="ma-0 pa-0 subtitle_dashboard">Recent Activity</p>
+                                <p class="ma-0 pa-0 dashboard-subtitle">Recent Activity</p>
                             </v-row>
                         </v-col>
                     </v-row>
 
-                    <v-row class="ma-0 pa-0 mt-4">
-                        <v-col cols="4" class="block_dashboard ma-0 pa-0" style="height: 250px; align-content: center !important;">
-                            <v-row class="ma-0 pa-0">
+                    <v-row class="ma-0 pa-0 mt-3">
+                        <v-col cols="4" class="block-dashboard ma-0 pa-0" style="height: 200px; align-content: center !important;">
+                            <v-row v-if="schedule.id" class="ma-0 pa-0">
                                 <v-col class="ma-0 pa-0" cols="3" justify="center" align="center">
-                                    <img class="ma-0 pa-0 avatar_dashboard" src="../../assets/home/dashboard/alert.svg" />
+                                    <img class="ma-0 pa-0 dashboard-doctor-photo" :src="doctor.photo" />
                                 </v-col>
 
                                 <v-col class="ma-0 pa-0">
                                     <v-row class="ma-0 pa-0">
-                                        <p class="ma-0 pa-0" style="font-size: 16px; font-weight: 600;">Dr. Paul MBBS, .MS.</p>
+                                        <p class="ma-0 pa-0 dashboard-appointment-doctor-name">{{ doctor.name }}</p>
                                     </v-row>
 
                                     <v-row class="ma-0 pa-0">
-                                        <p class="ma-0 pa-0" style="font-size: 15px;">Orthopedists specialist </p>
+                                        <p class="ma-0 pa-0 dashboard-appointment-doctor-specialist">{{ doctor.specialist }}</p>
                                     </v-row>
                                 </v-col>
                             </v-row>
 
-                            <v-row class="ma-0 pa-0 mt-4 pl-8 pr-8">
+                            <v-row v-if="schedule.id" class="ma-0 pa-0 mt-4 pl-8 pr-8">
                                 <v-col class="ma-0 pa-0">
                                     <v-row class="ma-0 pa-0">
                                         <v-col cols="6" class="ma-0 pa-0">
                                             <v-row class="ma-0 pa-0">
                                                 <v-col cols="3" class="ma-0 pa-0">
                                                     <v-row class="ma-0 pa-0">
-                                                        <p class="ma-0 pa-0" style="font-size: 13px; font-weight: 600;">Date</p>
+                                                        <p class="ma-0 pa-0 dashboard-appointment-title">Date</p>
                                                     </v-row>
                                                 </v-col>
 
                                                 <v-col class="ma-0 pa-0">
                                                     <v-row class="ma-0 pa-0">
-                                                        <p id="appointment_date" style="font-size: 13px;" class="ma-0 pa-0">02/02/2023</p>
+                                                        <p id="appointment_date" class="ma-0 pa-0 dashboard-appointment-text">{{ schedule.date }}</p>
                                                     </v-row>
                                                 </v-col>
                                             </v-row>
@@ -87,13 +106,13 @@
                                             <v-row class="ma-0 pa-0">
                                                 <v-col cols="3" class="ma-0 pa-0">
                                                     <v-row class="ma-0 pa-0">
-                                                        <p style="font-size: 13px; font-weight: 600;" class="ma-0 pa-0">Time</p>
+                                                        <p class="ma-0 pa-0 dashboard-appointment-title">Time</p>
                                                     </v-row>
                                                 </v-col>
 
                                                 <v-col class="ma-0 pa-0">
                                                     <v-row class="ma-0 pa-0">
-                                                        <p id="appointment_time" style="font-size: 13px;" class="ma-0 pa-0">11.30am</p>
+                                                        <p id="appointment_time" class="ma-0 pa-0 dashboard-appointment-text">{{ schedule.time }} hrs</p>
                                                     </v-row>
                                                 </v-col>
                                             </v-row>
@@ -109,30 +128,30 @@
 
                                         <v-col class="ma-0 pa-0">
                                             <v-row class="ma-0 pa-0">
-                                                <p id="appointment_address" style="font-size: 13px;" class="ma-0 pa-0">610-1a 10th St Vietnam, Indo.</p>
+                                                <p id="appointment_address" class="ma-0 pa-0 dashboard-appointment-text">{{ schedule.address_patient }}</p>
                                             </v-row>
                                         </v-col>
                                     </v-row>
 
-                                    <v-row class="ma-0 pa-0 mt-5">
+                                    <v-row class="ma-0 pa-0 mt-3">
                                         <v-col cols="6" class="ma-0 pa-0">
-                                            <v-row class="ma-0 pa-0">
-                                                <v-col cols="2" class="ma-0 pa-0" style="justify-content: center; align-content: center;">
+                                            <v-btn color="transparent" rounded elevation="0" class="ma-0 pa-0 px-1 dashboard-appointment-button" @click="cancelBooking (schedule.id)">
+                                                <v-col cols="2" class="ma-0 pa-0">
                                                     <v-row class="ma-0 pa-0">
                                                         <img width="20" class="ma-0 pa-0" src="../../assets/home/dashboard/cancel.svg" />
                                                     </v-row>
                                                 </v-col>
 
-                                                <v-col class="ma-0 pa-0 ml-2" style="justify-content: center; align-content: center;">
+                                                <v-col class="ma-0 pa-0 ml-2 dashboard-appointment-button-text">
                                                     <v-row class="ma-0 pa-0">
                                                         <p class="ma-0 pa-0" style="font-size: 13px;">Cancel Booking</p>
                                                     </v-row>
                                                 </v-col>
-                                            </v-row>
+                                            </v-btn>
                                         </v-col>
 
                                         <v-col class="ma-0 pa-0">
-                                            <v-row class="ma-0 pa-0">
+                                            <v-btn color="transparent" rounded elevation="0" class="ma-0 pa-0 px-1 dashboard-appointment-button">
                                                 <v-col cols="2" class="ma-0 pa-0">
                                                     <v-row class="ma-0 pa-0">
                                                         <img width="20" class="ma-0 pa-0" src="../../assets/home/nav/schedule.svg" />
@@ -141,22 +160,22 @@
 
                                                 <v-col class="ma-0 pa-0">
                                                     <v-row class="ma-0 pa-0 ml-2">
-                                                        <p class="ma-0 pa-0" style="font-size: 13px;">Reschedule</p>
+                                                        <p class="ma-0 pa-0 dashboard-appointment-button-text">Reschedule</p>
                                                     </v-row>
                                                 </v-col>
-                                            </v-row>
+                                            </v-btn>
                                         </v-col>
                                     </v-row>
                                 </v-col>
                             </v-row>
                         </v-col>
 
-                        <v-col class="block_dashboard ma-0 pa-0 ml-7 pl-7 pr-7" justify="center" style="height: 250px; align-content: center !important;">
+                        <v-col class="block-dashboard ma-0 pa-0 ml-7 pl-7 pr-7" justify="center" style="height: 200px; align-content: center !important;">
                             <v-row class="ma-0 pa-0">
                                 <v-col cols="5" class="ma-0 pa-0">
                                     <v-row class="ma-0 pa-0">
                                         <v-col cols="3" class="ma-0 pa-0">
-                                            <img id="recent_activity_doctor_photo" class="ma-0 pa-0 avatar_dashboard" src="../../assets/home/dashboard/alert.svg" />
+                                            <img id="recent_activity_doctor_photo" class="ma-0 pa-0 dashboard-recent-activity-photo" src="../../assets/home/dashboard/alert.svg" />
                                         </v-col>
 
                                         <v-col class="ma-0 pa-0">
@@ -178,11 +197,11 @@
                                 </v-col>
                             </v-row>
 
-                            <v-row class="ma-0 pa-0 mt-6">
+                            <v-row class="ma-0 pa-0 mt-4">
                                 <v-col cols="5" class="ma-0 pa-0">
                                     <v-row class="ma-0 pa-0">
                                         <v-col cols="3" class="ma-0 pa-0">
-                                            <img class="ma-0 pa-0 avatar_dashboard" src="../../assets/home/dashboard/alert.svg" />
+                                            <img class="ma-0 pa-0 dashboard-recent-activity-photo" src="../../assets/home/dashboard/alert.svg" />
                                         </v-col>
 
                                         <v-col class="ma-0 pa-0">
@@ -204,11 +223,11 @@
                                 </v-col>
                             </v-row>
 
-                            <v-row class="ma-0 pa-0 mt-6">
+                            <v-row class="ma-0 pa-0 mt-4">
                                 <v-col cols="5" class="ma-0 pa-0">
                                     <v-row class="ma-0 pa-0">
                                         <v-col cols="3" class="ma-0 pa-0">
-                                            <img class="ma-0 pa-0 avatar_dashboard" src="../../assets/home/dashboard/alert.svg" />
+                                            <img class="ma-0 pa-0 dashboard-recent-activity-photo" src="../../assets/home/dashboard/alert.svg" />
                                         </v-col>
 
                                         <v-col class="ma-0 pa-0">
@@ -234,31 +253,31 @@
                 </v-col>
             </v-row>
 
-            <v-row class="ma-0 pa-0 mt-7">
-                <v-col class="ma-0 pa-0 mt-7">
+            <v-row class="ma-0 pa-0 mt-5">
+                <v-col class="ma-0 pa-0">
                     <v-row class="ma-0 pa-0">
                         <v-col cols="4" class="ma-0 pa-0">
                             <v-row class="ma-0 pa-0">
-                                <p class="ma-0 pa-0 subtitle_dashboard">Medication</p>
+                                <p class="ma-0 pa-0 dashboard-subtitle">Medication</p>
                             </v-row>
                         </v-col>
 
                         <v-col class="ma-0 pa-0 ml-7">
                             <v-row class="ma-0 pa-0">
-                                <p class="ma-0 pa-0 subtitle_dashboard">Current Condition of Patients</p>
+                                <p class="ma-0 pa-0 dashboard-subtitle">Current Condition of Patients</p>
                             </v-row>
                         </v-col>
 
                         <v-col class="ma-0 pa-0 ml-5">
                             <v-row class="ma-0 pa-0">
-                                <p class="ma-0 pa-0 subtitle_dashboard">Recent bills</p>
+                                <p class="ma-0 pa-0 dashboard-subtitle">Recent bills</p>
                             </v-row>
                         </v-col>
                     </v-row>
 
-                    <v-row class="ma-0 pa-0 mt-4">
+                    <v-row class="ma-0 pa-0 mt-3">
                         <v-col cols="4" class="ma-0 pa-0">
-                            <v-row class="block_alternative_dashboard ma-0 pa-0 pl-5 pr-5" justify="center" align="center">
+                            <v-row class="block-alternative-dashboard ma-0 pa-0 pl-5 pr-5" justify="center" align="center">
                                 <v-col>
                                     <v-row class="ma-0 pa-0">
                                         <p class="ma-0 pa-0" id="medication_name" style="font-size: 18px; font-weight: 600;">Fenofibrate (48mg)</p>
@@ -278,7 +297,7 @@
                                 </v-col>
                             </v-row>
 
-                            <v-row class="block_alternative_dashboard ma-0 pa-0 pl-5 pr-5 mt-2" justify="center" align="center">
+                            <v-row class="block-alternative-dashboard ma-0 pa-0 pl-5 pr-5 mt-2" justify="center" align="center">
                                 <v-col>
                                     <v-row class="ma-0 pa-0">
                                         <p class="ma-0 pa-0" id="medication_name" style="font-size: 19px; font-weight: 600;">Alfuzosin (10mg)</p>
@@ -298,7 +317,7 @@
                                 </v-col>
                             </v-row>
 
-                            <v-row class="block_alternative_dashboard ma-0 pa-0 pl-5 pr-5 mt-2" justify="center" align="center">
+                            <v-row class="block-alternative-dashboard ma-0 pa-0 pl-5 pr-5 mt-2" justify="center" align="center">
                                 <v-col>
                                     <v-row class="ma-0 pa-0">
                                         <p class="ma-0 pa-0" id="medication_name" style="font-size: 18px; font-weight: 600;">Dexamethasone (4mg)</p>
@@ -320,9 +339,9 @@
                         </v-col>
 
                         <v-col class="ma-0 pa-0 ml-7">
-                            <v-col class="block_dashboard ma-0 pa-0 pl-5 pr-5" style="height: 100%; align-content: center;">
+                            <v-col class="block-dashboard ma-0 pa-0 pl-5 pr-5" style="height: 100%; align-content: center;">
                                 <v-row class="ma-0 pa-0" >
-                                    <p class="ma-0 pa-1 pl-2 pr-2 block_alternative_dashboard" style="color: white; font-size: 14px; font-weight: 600;">Moderate</p>
+                                    <p class="ma-0 pa-1 pl-2 pr-2 block-alternative-dashboard" style="color: white; font-size: 14px; font-weight: 600;">Moderate</p>
                                 </v-row>
 
                                 <v-row class="ma-0 pa-0 mt-7">
@@ -389,7 +408,7 @@
                         </v-col>
 
                         <v-col class="ma-0 pa-0 ml-5">
-                            <v-row class="block_dashboard ma-0 pa-0 pl-5 pr-5" justify="center" align="center" style="height: 100%;">
+                            <v-row class="block-dashboard ma-0 pa-0 pl-5 pr-5" justify="center" align="center" style="height: 100%;">
                                 <v-col class="ma-0 pa-0">
                                     <v-row class="ma-0 pa-0">
                                         <v-col class="ma-0 pa-0" cols="7" justify="center" align="center">
@@ -479,12 +498,234 @@
                 </v-col>
             </v-row>
         </v-col>
+
+        <v-dialog v-model="showDelete" persistent width="500" class="pa-5" transition="dialog-bottom-transition" align="center" justify="center" content-class="background-dialog">
+            <p class="mt-10" style="font-size: 35px">Delete user</p>
+
+            <p class="mt-10" style="font-size: 20px">Are you sure?</p>
+
+            <v-card-actions class="ma-0 pa-0">
+                <v-col cols="6">
+                    <v-btn block rounded color="#ffaa92" class="ma-0 pa-6 mt-10" @click="showDelete = false">
+                        <span class="ma-0 pa-0 dashboard-dialog-button-text">Cancel</span>
+                    </v-btn>
+                </v-col>
+
+                <v-col cols="6">
+                    <v-btn block rounded color="#ffaa92" class="ma-0 pa-6 mt-10" @click="deleteAppointment (schedule.id)">
+                        <span class="ma-0 pa-0 dashboard-dialog-button-text">Delete</span>
+                    </v-btn>
+                </v-col>
+            </v-card-actions>
+        </v-dialog>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import * as jose from 'jose'
+
 export default {
     layout: 'ui-home',
-    auth: true
+    auth: true,
+    data () {
+        return {
+            doctors: [],
+            doctor: [],
+            schedules: [],
+            schedule: [],
+            idDelete: '',
+            showDelete: false
+        }
+    },
+    computed: {
+        ...mapState({
+            token: state => state.token
+        })
+    },
+    mounted () {
+        this.getDoctors()
+        this.email_doctor()
+        this.getDoctors()
+        this.fetchAllSchedules()
+    },
+    methods: {
+        async getDoctors () {
+            const url = '/get-all-doctors'
+
+            this.$axios.get(url)
+                .then((res) => {
+                    console.log('@ Keyla => Response ', res)
+
+                    if (res.data.message === 'Success') {
+                        this.doctors = res.data.doctors
+
+                        this.getDoctor()
+                    }
+                })
+                .catch((err) => {
+                    console.log('@ Keyla => Error Frontend', err)
+                })
+        },
+        email_doctor () {
+            const token = localStorage.getItem('Token')
+
+            console.log('Token email doctor funcion:', token)
+
+            const secret = new TextEncoder().encode('MySecretPassword')
+
+            if (token) {
+                try {
+                    const claims = jose.decodeJwt(token, secret)
+                    console.log('@ Keyla => Claims:', claims)
+
+                    this.claims = claims
+                } catch (error) {
+                    console.error('JWT Decryption Error:', error)
+                }
+            } else {
+                console.error('Token not found in localStorage')
+                return null
+            }
+        },
+        getDoctor () {
+            console.log('@ Keyla => Claims:', this.claims)
+            console.log('@ Keyla => Doctors:', this.doctors)
+
+            if (this.claims) {
+                this.doctor = this.doctors.find(doctor => this.claims.email === doctor.email)
+
+                console.log('Doctor encontrado:', this.doctor)
+            } else {
+                console.error('Claims not found')
+            }
+        },
+        getToday () {
+            const date = new Date()
+            const options = {
+                timeZone: 'America/Mexico_City',
+                hour12: false,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            }
+            const formattedDate = date.toLocaleString('es-MX', options)
+            const isoDateTime = formattedDate.replace(/(\d{2})\/(\d{2})\/(\d{4}), (\d{2}):(\d{2}):(\d{2})/, '$3-$2-$1T$4:$5:$6.000Z')
+
+            return isoDateTime
+        },
+        fetchAllSchedules () {
+            const url = '/get-all-schedules'
+
+            this.$axios.get(url)
+                .then((res) => {
+                    console.log('@ Keyla => Response ', res)
+
+                    if (res.data.message === 'Success') {
+                        this.schedules = res.data.schedules
+
+                        console.log('@ Keyla => All schedules ', this.schedules)
+
+                        this.schedules = this.schedules.filter(schedule => schedule.email_doctor === this.doctor.email)
+
+                        console.log('@ Keyla => Filtered Schedules By Doctor ', this.schedules)
+
+                        this.findNextAppointment()
+                    }
+                })
+                .catch((err) => {
+                    console.log('@ Keyla => Error Frontend', err)
+                })
+        },
+        async findNextAppointment () {
+            const currentTimeISO = this.getToday()
+
+            console.log('@ Keyla => currentTimeISO ', currentTimeISO)
+
+            const futureAppointments = this.schedules.filter(schedule => {
+                const scheduleDateTime = new Date(schedule.date.split('/').reverse().join('-') + 'T' + schedule.time + ':00').toISOString()
+
+                const currentDateTime = new Date(currentTimeISO).toISOString()
+
+                return scheduleDateTime > currentDateTime
+            })
+
+            console.log('@ Keyla => order Appointments ', futureAppointments)
+
+            if (futureAppointments.length > 0) {
+                futureAppointments.sort((a, b) => {
+                    if (a.date !== b.date) {
+                        return a.date.localeCompare(b.date)
+                    } else {
+                        return a.time.localeCompare(b.time)
+                    }
+                })
+
+                const nextAppointment = futureAppointments[0]
+
+                console.log('@ Keyla => Next Appointment ', nextAppointment)
+
+                this.schedule = nextAppointment
+
+                return this.schedule
+            } else {
+                console.log('@ Keyla => No hay citas futuras disponibles')
+
+                return null
+            }
+        },
+        cancelBooking (id) {
+            this.idDelete = id
+            this.showDelete = true
+        },
+        deleteAppointment () {
+            const url = `/delete-user/${this.idDelete}`
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }
+
+            this.$axios.delete(url, config)
+                .then((res) => {
+                    console.log('@ Keyla => Res ', res)
+
+                    if (res.data.message === 'User deleted successfully') {
+                        this.showDelete = false
+                        this.getAllUsers()
+
+                        this.showAlert = true
+                        this.alertText = res.data.message
+                        this.alertColor = '#6CDACE'
+                        this.alertType = 'success'
+
+                        setTimeout(() => {
+                            this.showAlert = false
+                        }, 3000)
+
+                        this.email_user = null
+                        this.password_user = null
+                    }
+                })
+                .catch((err) => {
+                    console.log('@ Keyla => Error ', err)
+
+                    this.showAlert = true
+                    this.alertText = err.response.data.message
+                    this.alertColor = '#FF9F8E'
+                    this.alertType = 'warning'
+
+                    setTimeout(() => {
+                        this.showAlert = false
+                    }, 3000)
+
+                    this.email_user = null
+                    this.password_user = null
+                })
+        }
+    }
 }
 </script>

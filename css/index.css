@@ -3,7 +3,6 @@
 *
 {
     font-family: "Poiret One", sans-serif !important;
-    color: #575757;
 }
 
 .image-container 
@@ -45,6 +44,11 @@
     align-content: center;
 }
 
+.v-select__slot > label
+{
+    position: static !important;
+}
+
 .v-data-table-header th {
     font-size: 18px !important;
 }
@@ -52,6 +56,7 @@
 .v-data-table tbody tr td 
 {
     font-size: 16px !important;
+    text-transform: capitalize !important;
 }
 
 .v-navigation-drawer
@@ -82,26 +87,575 @@
     font-weight: 600 !important;
 }
 
-.block_dashboard
+.v-navigation-drawer-list
+{
+    max-height: calc(100vh - 480px) !important; 
+    overflow-y: auto !important;
+}
+
+.v-navigation-drawer-footer
+{
+    position: absolute !important; 
+    bottom: 0 !important; 
+    left: 0 !important;
+}
+
+.dashboard-doctor-photo
+{
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    object-position: top !important;
+}
+
+.dashboard-appointment-doctor-name
+{
+    font-size: 16px !important; 
+    font-weight: 600 !important;
+}
+
+.dashboard-appointment-doctor-specialist
+{
+    font-size: 15px !important;
+}
+
+.dashboard-appointment-title
+{
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+.dashboard-appointment-text
+{
+    font-size: 13px !important;
+}
+
+.dashboard-recent-activity-photo
+{
+    height: 35px !important;
+    width: 35px !important;
+    object-fit: cover !important;
+    object-position: top !important;
+}
+
+.block-dashboard
 {
     background-color: #ffe7db !important;
     border-radius: 50px !important;
 }
 
-.block_alternative_dashboard
+.block-alternative-dashboard
 {
     background-color: #ffccba !important;
     border-radius: 50px !important;
 }
 
-.subtitle_dashboard
+.dashboard-subtitle
 {
     font-size: 18px; 
     font-weight: 600;
 }
 
-.avatar_dashboard
+.dashboard-appointment-button
 {
-    width: 35px !important;
-    height: 35px !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+}
+
+.dashboard-appointment-button:hover, .dashboard-appointment-button:active
+{
+    background-color: rgba(255, 181, 181, 0.814) !important;
+}
+
+.dashboard-appointment-button-text
+{
+    justify-content: center !important;
+    align-content: center !important;
+}
+
+.dashboard-dialog-button-text
+{
+    text-transform: none !important; 
+    color: white !important; 
+    font-size: 15px !important; 
+    font-weight :bold !important;
+}
+
+.v-input__append-inner
+{
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 56px !important;
+    align-items: center !important;
+}
+
+.v-text-field__slot
+{
+    margin: 0 !important;
+    padding: 0 !important;
+    align-items: center !important;
+}
+
+.v-text-field__details
+{
+    display: none !important;
+}
+
+.schedule-schedule-col
+{
+    position: relative !important;
+}
+
+.button-secondary
+{
+    text-transform: none !important; 
+    color: white !important; 
+    font-size: 15px !important; 
+    font-weight :bold !important;
+    height: 100% !important;
+    text-transform: capitalize !important;
+}
+
+.schedule-schedule-button
+{
+    border: 1px solid #575757 !important;
+    background-color: transparent !important;
+}
+
+.schedule-schedule-button-text
+{
+    text-transform: none !important; 
+    font-size: 16px !important; 
+    font-weight: 600 !important;
+}
+
+.schedule-schedule-button:hover, .schedule-schedule-button-active
+{
+    border: 1px solid #ffde8b !important;
+    background-color: #ffde8b !important;
+}
+
+.schedule-schedule-list
+{
+    max-height: calc(100vh - 400px) !important; 
+    overflow-y: auto !important;
+}
+
+.schedule-schedule-card-schedule
+{
+    border: 1px solid #575757 !important; 
+    border-radius: 70px !important;
+}
+
+.schedule-schedule-photo-patient
+{
+    border-radius: 50% !important;
+    object-fit: cover !important;
+}
+
+.schedule-schedule-title
+{
+    font-size: 18px !important; 
+    font-weight: 600 !important;
+}
+
+.schedule-schedule-subtitle
+{
+    font-size: 15px !important; 
+    font-weight: 600 !important;
+}
+
+.schedule-schedule-text
+{
+    font-size: 15px !important;
+}
+
+.schedule-schedule-footer
+{
+    width: 100% !important;
+    height: 200px !important;
+    position: absolute !important; 
+    background-color: #fff6f1 !important;
+    bottom: 0 !important; 
+    left: 0 !important;
+    box-shadow: 0px -5px 5px -5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.schedule-doctors
+{
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+}
+
+.schedule-doctors-title
+{
+    font-size: 20px !important; 
+    font-weight: 600 !important;
+}
+
+.schedule-doctors-photo
+{
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    object-position: top !important;
+}
+
+.schedule-doctors-name
+{
+    font-size: 15px !important; 
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+}
+
+.schedule-doctors-degree
+{
+    font-size: 14px !important; 
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+}
+
+
+.schedule-doctors-specialist
+{
+    font-size: 14px !important;
+    text-transform: capitalize !important;
+}
+
+.schedule-appointment
+{
+    background-color: #ffe7db !important;
+    border-radius: 40px !important;
+    padding: 50px 20px !important;
+    text-align: center !important;
+    height: calc(100vh - 130px)!important;
+    align-content: center !important;
+}
+
+.schedule-appointment-doctor-photo
+{
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    object-position: top !important;
+}
+
+.schedule-appointment-doctor-name
+{
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+}
+
+.schedule-appointment-doctor-specialist
+{
+    font-size: 20px !important;
+    text-transform: capitalize !important;
+}
+
+.v-input__slot
+{
+    margin-bottom: 0px !important;
+}
+
+.v-input
+{
+    align-content: center !important;
+    align-items: center !important;
+}
+    
+.schedule-icon-calendar
+{
+    position: absolute !important;
+    top: 0 !important;
+    right: 15px !important;
+}
+
+.v-select.v-text-field:not(.v-text-field--single-line) input
+{
+    position: absolute !important;
+    left: 0 !important;
+    min-width: 100% !important;
+}
+
+.v-input__append-inner
+{
+    position: absolute !important;
+    right: 0 !important;
+}
+
+.mdi-camera
+{
+    position: absolute !important;
+    right: 25px !important;
+}
+
+.schedule-new-patient-dialog
+{
+    background-color: #ffe7db !important;
+    border-radius: 40px !important;
+    padding: 50px 20px !important;
+    text-align: center !important;
+    position: absolute !important;
+    height: 100vh !important;
+}
+
+.schedule-new-patient-dialog-doctor-name
+{
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+}
+
+.schedule-new-patient-dialog-doctor-specialist
+{
+    font-size: 20px !important;
+    text-transform: capitalize !important;
+}
+
+.v-progress-circular 
+{
+    margin: 1rem !important;
+}
+
+.progress-circular-value
+{
+    font-size: 18px !important;
+    text-align: center !important;
+}
+
+.progress-circular-topic
+{
+    font-size: 18px !important;
+    text-align: center !important;
+    text-transform: capitalize !important;
+}
+
+.v-progress-circular__info
+{
+    font-size: 20px !important;
+    color: #575757 !important;
+}
+
+.patients-prescription-button
+{
+    border: 1px solid #575757 !important;
+    background-color: transparent !important;
+}
+
+.patients-prescription-button:hover, .patients-prescription-button-active
+{
+    border: 1px solid #ffde8b !important;
+    background-color: #ffde8b !important;
+}
+
+.patients-prescription-button-text
+{
+    text-transform: none !important; 
+    font-size: 16px !important; 
+    font-weight: 600 !important;
+}
+
+.patient-photo
+{
+    border-radius: 50% !important;
+    object-fit: cover !important;
+}
+
+.patients-prescription
+{
+    max-height: calc(100vh - 430px) !important; 
+    overflow-y: auto !important;
+}
+
+.patients-prescription-row
+{
+    width: 100% !important;
+    background-color: #eeeaea !important;
+    border-radius: 50px !important;
+}
+
+.patients-prescription-doctor
+{
+    font-size: 18px !important; 
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+}
+
+.patients-prescription-indication
+{
+    font-size: 18px !important;
+    text-transform: capitalize !important;
+}
+
+.patients-prescription-date
+{
+    font-size: 18px !important;
+    text-transform: uppercase !important;
+}
+
+.patients-prescription-time
+{
+    font-size: 18px !important;
+    text-transform: uppercase !important;
+}
+
+.patients-table
+{
+    border-top: 0.5px solid #575757 !important;
+    background-color: transparent !important;
+}
+
+.patients-table td, .patients-tabletbody
+{
+    border: none !important;
+}
+
+.patients-table thead
+{
+    border-bottom: 0.5px solid #575757 !important;
+}
+
+.patients-table th
+{
+    font-size: 18px !important;
+}
+
+.patients-table tbody tr td
+{
+    font-size: 14px !important;
+}
+
+.orders-medicine-card
+{
+    background-color: #ffe7db !important;
+    border-radius: 50px !important;
+    width: 100% !important;
+    min-height: 400px !important;
+}
+
+.orders-medicine-photo
+{
+    border-radius: 50% !important;
+    object-fit: contain !important;
+}
+
+.orders-medicine-name
+{
+    font-size: 25px !important; 
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+}
+
+.orders-medicine-description
+{
+    font-size: 18px !important;
+    text-transform: capitalize !important;
+}
+
+.orders-medicine-price
+{
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+}
+
+.orders-medicine-add-text
+{
+    font-size: 20px !important; 
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+}
+
+.orders-medicine
+{
+    max-height: calc(100vh - 200px) !important; 
+    overflow-y: auto !important;
+}
+
+.orders-footer
+{
+    width: 100% !important;
+    height: 80px !important;
+    position: absolute !important; 
+    background-color: #fff6f1 !important;
+    bottom: 0 !important; 
+    left: 0 !important;
+    box-shadow: 0px -5px 5px -5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.orders-footer-add-button
+{
+    position: absolute !important; 
+    bottom: 44px !important;
+    border-radius: 50px !important;
+}
+
+.orders-footer-add-button-text
+{
+    font-size: 30px !important;
+    color: white !important;
+    text-transform: capitalize !important;
+}
+
+.laboratoty-card
+{
+    background-color: #ffe7db !important;
+    border-radius: 50px !important;
+    width: 100% !important;
+}
+
+.laboratory-card-title
+{
+    font-size: 25px !important;
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+}
+
+.laboratory-card-subtitle
+{
+    font-size: 18px !important;
+    text-transform: capitalize !important;
+}
+
+.laboratoty-table
+{
+    border-top: 0.5px solid #575757 !important;
+    background-color: transparent !important;
+}
+
+.laboratoty-table td, .laboratoty-table tbody
+{
+    border: none !important;
+}
+
+.laboratory-table thead
+{
+    border-bottom: 0.5px solid #575757 !important;
+}
+
+.v-data-table-header th
+{
+    font-size: 18px !important;
+}
+
+.v-data-table tbody tr td
+{
+    font-size: 14px !important;
+}
+
+.laboratory-table-status-in-progress 
+{
+    color: #874C96 !important;
+    font-weight: 600 !important;
+}
+
+.laboratory-table-status-completed, .laboratory-table-status-done
+{
+    color: #ffccba !important;
+    font-weight: 600 !important;
+}
+
+.theme--light.v-data-table > .v-data-table__wrapper > table > tbody > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper)
+{
+    background-color: #ffccba35 !important;
 }
