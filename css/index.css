@@ -525,6 +525,47 @@
     font-size: 14px !important;
 }
 
+.patients-payments-fully-paid
+{
+    background-color: #ffe7db !important;
+    border-radius: 50px !important;
+}
+
+.patients-payments-fully-paid-title
+{
+    font-size: 20px !important; 
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+}
+
+.patients-payments-fully-paid-subtitle
+{
+    font-size: 17px !important; 
+    font-weight: 500 !important;
+    text-transform: capitalize !important;
+}
+
+.patients-payments-fully-paid-text
+{
+    font-size: 15px !important; 
+    font-weight: 400 !important;
+    text-transform: capitalize !important;
+}
+
+.patients-payments-fully-paid-button
+{
+    text-transform: none !important; 
+    background-color: #ffaa92 !important;
+}
+
+.patients-payments-fully-paid-button-text
+{
+    text-transform: capitalize !important; 
+    color: white !important; 
+    font-size: 15px !important; 
+    font-weight: bold !important;
+}
+
 .orders-medicine-card
 {
     background-color: #ffe7db !important;

@@ -176,7 +176,7 @@
                 </v-row>
 
                 <v-row class="ma-0 pa-0 mt-10" v-if="show_checkups">
-                    <v-col class="ma-0 pa-0 patients-checkups" id="patients_checkups">
+                    <v-col class="ma-0 pa-0">
                         <v-data-table hide-default-footer :headers="headers_checkups" :items="checkups" class="ma-0 pa-0 patients-table" style="width: 100%;">
                             <template #[`item.date_and_time`]="{item}">
                                 <v-row class="ma-0 pa-0" align="center" justify="center">
@@ -188,11 +188,11 @@
                 </v-row>
 
                 <v-row class="ma-0 pa-0 mt-10" v-if="show_documents">
-                    <v-col class="ma-0 pa-0 patients-checkups" id="patients_checkups">
+                    <v-col class="ma-0 pa-0">
                         <v-data-table hide-default-footer :headers="headers_documents" :items="documents" class="ma-0 pa-0 patients-table" style="width: 100%;">
                             <template #[`item.download`]="{item}">
                                 <v-row class="ma-0 pa-0" align="center" justify="center">
-                                    <v-btn icon color="grey darken-1" class="ma-0 pa-0" @click="generate_pdf(item.date_and_time)">
+                                    <v-btn icon color="grey darken-1" class="ma-0 pa-0" @click="generatePDF(item.date_and_time)">
                                         <v-icon class="ma-0 pa-0">mdi-download</v-icon>
                                     </v-btn>
                                 </v-row>
@@ -202,9 +202,97 @@
                 </v-row>
 
                 <v-row class="ma-0 pa-0 mt-10" v-if="show_payments">
-                    <v-col class="ma-0 pa-0 patients-checkups" id="patients_checkups">
+                    <v-col cols="9" class="ma-0 pa-0 px-5">
                         <v-data-table hide-default-footer :headers="headers_payments" :items="payments" class="ma-0 pa-0 patients-table" style="width: 100%;">
                         </v-data-table>
+                    </v-col>
+
+                    <v-col class="ma 0 pa-0">
+                        <v-row class="ma-0 pa-0 px-5">
+                            <v-col class="ma-0 pa-10  patients-payments-fully-paid">
+                                <v-row class="ma-0 pa-0" align="center" justify="center">
+                                    <p class="ma-0 pa-0 patients-payments-fully-paid-title">
+                                        Fully Paid
+                                    </p>
+                                </v-row>
+
+                                <v-row class="ma-0 pa-0 mt-7">
+                                    <v-col cols="9" class="ma-0 pa-0">
+                                        <p class="ma-0 pa-0 patients-payments-fully-paid-subtitle">
+                                            Total Amount
+                                        </p>
+                                    </v-col>
+
+                                    <v-col class="ma-0 pa-0">
+                                        <p class="ma-0 pa-0 patients-payments-fully-paid-text">
+                                            $ {{ total_amount }}
+                                        </p>
+                                    </v-col>
+                                </v-row>
+
+                                <v-row class="ma-0 pa-0 mt-3">
+                                    <v-col cols="9" class="ma-0 pa-0">
+                                        <p class="ma-0 pa-0 patients-payments-fully-paid-subtitle">
+                                            Amount Paid
+                                        </p>
+                                    </v-col>
+
+                                    <v-col class="ma-0 pa-0">
+                                        <p class="ma-0 pa-0 patients-payments-fully-paid-text">
+                                            $ {{ amount_paid }}
+                                        </p>
+                                    </v-col>
+                                </v-row>
+
+                                <v-row class="ma-0 pa-0 mt-3">
+                                    <v-col cols="9" class="ma-0 pa-0">
+                                        <p class="ma-0 pa-0 patients-payments-fully-paid-subtitle">
+                                            discount amount
+                                        </p>
+                                    </v-col>
+
+                                    <v-col class="ma-0 pa-0">
+                                        <p class="ma-0 pa-0 patients-payments-fully-paid-text">
+                                            $ {{ discount_amount }}
+                                        </p>
+                                    </v-col>
+                                </v-row>
+
+                                <v-row class="ma-0 pa-0 mt-3">
+                                    <v-col cols="9" class="ma-0 pa-0">
+                                        <p class="ma-0 pa-0 patients-payments-fully-paid-subtitle">
+                                            deposit
+                                        </p>
+                                    </v-col>
+
+                                    <v-col class="ma-0 pa-0">
+                                        <p class="ma-0 pa-0 patients-payments-fully-paid-text">
+                                            $ {{ deposit }}
+                                        </p>
+                                    </v-col>
+                                </v-row>
+
+                                <v-row class="ma-0 pa-0 mt-3">
+                                    <v-col cols="9" class="ma-0 pa-0">
+                                        <p class="ma-0 pa-0 patients-payments-fully-paid-subtitle">
+                                            balances
+                                        </p>
+                                    </v-col>
+
+                                    <v-col class="ma-0 pa-0">
+                                        <p class="ma-0 pa-0 patients-payments-fully-paid-text">
+                                            $ {{ balances }}
+                                        </p>
+                                    </v-col>
+                                </v-row>
+
+                                <v-row class="ma-0 pa-0 mt-10">
+                                    <v-btn block rounded class="ma-0 pa-6 patients-payments-fully-paid-button" @click="paymentsCompleted ()">
+                                        <span class="ma-0 pa-0 patients-payments-fully-paid-button-text">advance to pay</span>
+                                    </v-btn>
+                                </v-row>
+                            </v-col>
+                        </v-row>
                     </v-col>
                 </v-row>
             </v-col>
@@ -262,7 +350,12 @@ export default {
                 blood_pressure_percentage: 0,
                 oxygen: 0
             },
-            document: []
+            document: [],
+            total_amount: 0,
+            amount_paid: 0,
+            discount_amount: 0,
+            deposit: 0,
+            balances: 0
         }
     },
     mounted () {
@@ -339,6 +432,8 @@ export default {
                 this.show_documents = true
             } else if (section === 'Payments') {
                 this.show_payments = true
+
+                this.calculateFullyPaid()
             }
         },
         async getPatients () {
@@ -418,6 +513,8 @@ export default {
                         }))
 
                         console.log('@ Keyla => doc', this.document)
+
+                        this.calculateFullyPaid()
                     }
                 })
                 .catch((err) => {
@@ -463,7 +560,7 @@ export default {
                 console.error('Blood pressure is undefined.')
             }
         },
-        async generate_pdf (dateTime) {
+        async generatePDF (dateTime) {
             const [date, time] = dateTime.split(' ')
             const doc = new JsPDF()
             const pageWidth = doc.internal.pageSize.getWidth()
@@ -586,7 +683,65 @@ export default {
             const formattedDateISO = `${year}-${month}-${day}`
 
             return formattedDateISO
+        },
+        calculateFullyPaid () {
+            this.total_amount = this.schedules_details.reduce((total, scheduleDetails) => {
+                return total + parseFloat(scheduleDetails.payment)
+            }, 0)
+
+            const paidDetails = this.schedules_details.filter(scheduleDetails => {
+                return scheduleDetails.payment_completed === true
+            })
+
+            this.amount_paid = paidDetails.reduce((total, scheduleDetails) => {
+                return total + parseFloat(scheduleDetails.payment)
+            }, 0)
+
+            const threshold = 100
+            this.discount_amount = this.total_amount > threshold ? this.total_amount * 0.1 : 0
+
+            this.balances = this.total_amount - this.amount_paid - this.discount_amount
+
+            if (this.balances < 0) {
+                this.balances = 0
+            }
+
+            const allPaymentsCompleted = this.schedules_details.every(scheduleDetails => scheduleDetails.payment_completed === true)
+
+            if (allPaymentsCompleted) {
+                this.amount_paid = this.total_amount - this.discount_amount
+            }
+
+            console.log('Total amount:', this.total_amount)
+            console.log('Amount paid:', this.amount_paid)
+            console.log('Discount amount:', this.discount_amount)
+            console.log('Balance:', this.balances)
+        },
+        async paymentsCompleted () {
+            const idsToUpdate = this.schedules_details.map(scheduleDetails => scheduleDetails.id)
+
+            const updatePaymentStatus = async (id) => {
+                const url = `/schedules-details/${id}`
+                const data = {
+                    payment_completed: true
+                }
+
+                try {
+                    const response = await this.$axios.put(url, data)
+                    console.log(`Updated payment completion status for ID ${id}:`, response.data)
+                } catch (error) {
+                    console.error(`Error updating payment completion status for ID ${id}:`, error)
+                }
+            }
+
+            for (const id of idsToUpdate) {
+                await updatePaymentStatus(id)
+            }
+
+            await this.fetchAllSchedulesDetails()
+            this.calculateFullyPaid()
         }
+
     }
 }
 </script>
