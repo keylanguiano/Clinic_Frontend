@@ -501,11 +501,11 @@
 
 .patients-table
 {
-    border-top: 0.5px solid #575757 !important;
+    /*border-top: 0.5px solid #575757 !important;*/
     background-color: transparent !important;
 }
 
-.patients-table td, .patients-tabletbody
+.patients-table td, .patients-table tbody, .theme--light.v-data-table > .v-data-table__wrapper > table > thead > tr:last-child > th
 {
     border: none !important;
 }
@@ -623,7 +623,7 @@
     background-color: transparent !important;
 }
 
-.laboratoty-table td, .laboratoty-table tbody
+.laboratoty-table td, .laboratoty-table tbody, .laboratoty-table tr
 {
     border: none !important;
 }

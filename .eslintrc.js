@@ -19,6 +19,7 @@ module.exports = {
     ],
     rules: {
         indent: ['error', 4],
-        'vue/valid-v-slot': 'off'
+        'vue/valid-v-slot': 'off',
+        '@typescript-eslint/no-var-requires': 'off'
     }
 }
