@@ -3,42 +3,36 @@
     "name": "dashboard",
     "path": "/dashboard",
     "component": "/Users/keylaanguiano/Documents/UG/SEXTO SEMESTRE/COMPUTO EN LA NUBE/Cloud_computing/CLINIC/Clinic_frontend/pages/dashboard/index.vue",
-    "chunkName": "pages/dashboard/index",
-    "_name": "_6e2914db"
+    "chunkName": "pages/dashboard/index"
   },
   {
     "name": "laboratory",
     "path": "/laboratory",
     "component": "/Users/keylaanguiano/Documents/UG/SEXTO SEMESTRE/COMPUTO EN LA NUBE/Cloud_computing/CLINIC/Clinic_frontend/pages/laboratory/index.vue",
-    "chunkName": "pages/laboratory/index",
-    "_name": "_5166a73c"
+    "chunkName": "pages/laboratory/index"
   },
   {
-    "name": "orders",
-    "path": "/orders",
-    "component": "/Users/keylaanguiano/Documents/UG/SEXTO SEMESTRE/COMPUTO EN LA NUBE/Cloud_computing/CLINIC/Clinic_frontend/pages/orders/index.vue",
-    "chunkName": "pages/orders/index",
-    "_name": "_09069314"
+    "name": "order",
+    "path": "/order",
+    "component": "/Users/keylaanguiano/Documents/UG/SEXTO SEMESTRE/COMPUTO EN LA NUBE/Cloud_computing/CLINIC/Clinic_frontend/pages/order/index.vue",
+    "chunkName": "pages/order/index"
   },
   {
     "name": "patients",
     "path": "/patients",
     "component": "/Users/keylaanguiano/Documents/UG/SEXTO SEMESTRE/COMPUTO EN LA NUBE/Cloud_computing/CLINIC/Clinic_frontend/pages/patients/index.vue",
-    "chunkName": "pages/patients/index",
-    "_name": "_388a01fd"
+    "chunkName": "pages/patients/index"
   },
   {
     "name": "schedule",
     "path": "/schedule",
     "component": "/Users/keylaanguiano/Documents/UG/SEXTO SEMESTRE/COMPUTO EN LA NUBE/Cloud_computing/CLINIC/Clinic_frontend/pages/schedule/index.vue",
-    "chunkName": "pages/schedule/index",
-    "_name": "_6ef7c746"
+    "chunkName": "pages/schedule/index"
   },
   {
     "name": "index",
     "path": "/",
     "component": "/Users/keylaanguiano/Documents/UG/SEXTO SEMESTRE/COMPUTO EN LA NUBE/Cloud_computing/CLINIC/Clinic_frontend/pages/index.vue",
-    "chunkName": "pages/index",
-    "_name": "_a1a6d4d4"
+    "chunkName": "pages/index"
   }
 ]

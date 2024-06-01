@@ -352,7 +352,6 @@
 </template>
 
 <script>
-import * as jose from 'jose'
 
 export default {
     layout: 'ui-home',
@@ -419,7 +418,8 @@ export default {
             show_all_schedules: true,
             show_schedules_yesterday: false,
             show_schedules_today: false,
-            show_schedules_tomorrow: false
+            show_schedules_tomorrow: false,
+            token: ''
         }
     },
     watch: {
@@ -428,9 +428,13 @@ export default {
         }
     },
     mounted () {
-        console.log('Token desde dashboard', localStorage.getItem('Token'))
+        this.token = localStorage.getItem('Token')
+        this.doctor = localStorage.getItem('Doctor')
+
+        console.log('token', this.token)
+        console.log('doctor', this.doctor)
+
         this.getDoctors()
-        this.email_doctor()
         this.getPatients()
         this.fetchAllSchedules()
     },
@@ -455,7 +459,26 @@ export default {
         getTomorrow () {
             return this.getDateOffset(1)
         },
-        fetchAllSchedules () {
+        async getDoctors () {
+            const url = '/get-all-doctors'
+
+            this.$axios.get(url)
+                .then((res) => {
+                    console.log('@ Keyla => Response ', res)
+
+                    if (res.data.message === 'Success') {
+                        this.doctors = res.data.doctors.map(doctor => ({
+                            ...doctor,
+                            specialist: Array.isArray(doctor.specialist) ? doctor.specialist : doctor.specialist.split(','),
+                            degree: Array.isArray(doctor.degree) ? doctor.degree : doctor.degree.split(',')
+                        }))
+                    }
+                })
+                .catch((err) => {
+                    console.log('@ Keyla => Error Frontend', err)
+                })
+        },
+        async fetchAllSchedules () {
             const url = '/get-all-schedules'
 
             this.$axios.get(url)
@@ -467,7 +490,7 @@ export default {
 
                         console.log('@ Keyla => All schedules ', this.schedules)
 
-                        this.schedules = this.schedules.filter(schedule => schedule.email_doctor === this.doctor.email)
+                        this.schedules = this.schedules.filter(schedule => schedule.email_doctor === this.doctor)
 
                         console.log('@ Keyla => Filtered Schedules By Doctor ', this.schedules)
 
@@ -498,60 +521,6 @@ export default {
                 this.show_schedules_today = true
             } else if (section === 'Tomorrow') {
                 this.show_schedules_tomorrow = true
-            }
-        },
-        async getDoctors () {
-            const url = '/get-all-doctors'
-
-            this.$axios.get(url)
-                .then((res) => {
-                    console.log('@ Keyla => Response ', res)
-
-                    if (res.data.message === 'Success') {
-                        this.doctors = res.data.doctors.map(doctor => ({
-                            ...doctor,
-                            specialist: Array.isArray(doctor.specialist) ? doctor.specialist : doctor.specialist.split(','),
-                            degree: Array.isArray(doctor.degree) ? doctor.degree : doctor.degree.split(',')
-                        }))
-
-                        this.getDoctor()
-                    }
-                })
-                .catch((err) => {
-                    console.log('@ Keyla => Error Frontend', err)
-                })
-        },
-        email_doctor () {
-            const token = localStorage.getItem('Token')
-
-            console.log('Token email doctor funcion:', token)
-
-            const secret = new TextEncoder().encode('MySecretPassword')
-
-            if (token) {
-                try {
-                    const claims = jose.decodeJwt(token, secret)
-                    console.log('@ Keyla => Claims:', claims)
-
-                    this.claims = claims
-                } catch (error) {
-                    console.error('JWT Decryption Error:', error)
-                }
-            } else {
-                console.error('Token not found in localStorage')
-                return null
-            }
-        },
-        getDoctor () {
-            console.log('@ Keyla => Claims:', this.claims)
-            console.log('@ Keyla => Doctors:', this.doctors)
-
-            if (this.claims) {
-                this.doctor = this.doctors.find(doctor => this.claims.email === doctor.email)
-
-                console.log('Doctor encontrado:', this.doctor)
-            } else {
-                console.error('Claims not found')
             }
         },
         registerPatient () {
@@ -632,8 +601,13 @@ export default {
         },
         async getPatients () {
             const url = '/get-all-patients'
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }
 
-            this.$axios.get(url)
+            this.$axios.get(url, config)
                 .then((res) => {
                     console.log('@ Keyla => Response ', res)
 
@@ -672,11 +646,16 @@ export default {
             this.clockPickerVisible = false
         },
         async fetchAvailableTimes (date) {
-            const url = `/get-available-date-time-schedules?email_doctor=${this.claims.email}&date=${date}`
+            const url = `/get-available-date-time-schedules?email_doctor=${this.doctor}&date=${date}`
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }
 
             console.log('@ Keyla => url available times', url)
 
-            this.$axios.get(url)
+            this.$axios.get(url, config)
                 .then((res) => {
                     if (res.data.availableTimes) {
                         console.log('@ Keyla => available times', res.data.availableTimes)
@@ -745,7 +724,7 @@ export default {
             if (this.$refs.formAppointment.validate()) {
                 const url = '/register-schedule'
                 const data = {
-                    email_doctor: this.doctor.email,
+                    email_doctor: this.doctor,
                     name_patient: this.name_appointment,
                     email_patient: this.email_appointment,
                     phone_patient: this.phone_appointment,
@@ -754,10 +733,15 @@ export default {
                     time: this.time_appointment,
                     room: this.room_appointment
                 }
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${this.token}`
+                    }
+                }
 
                 console.log('data', data)
 
-                this.$axios.post(url, data)
+                this.$axios.post(url, data, config)
                     .then((res) => {
                         console.log('@ Keyla => Response ', res)
 
@@ -773,13 +757,7 @@ export default {
                                 this.showAlert = false
                             }, 3000)
 
-                            this.name_appointment = null
-                            this.email_appointment = null
-                            this.phone_appointment = null
-                            this.address_appointment = null
-                            this.date_appointment = null
-                            this.time_appointment = null
-                            this.room_appointment = null
+                            this.$refs.formAppointment.reset()
                         }
                     })
                     .catch((err) => {

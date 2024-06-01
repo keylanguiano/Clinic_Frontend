@@ -6,7 +6,7 @@ import scrollBehavior from './router.scrollBehavior.js'
 
 const _6e2914db = () => interopDefault(import('../pages/dashboard/index.vue' /* webpackChunkName: "pages/dashboard/index" */))
 const _5166a73c = () => interopDefault(import('../pages/laboratory/index.vue' /* webpackChunkName: "pages/laboratory/index" */))
-const _09069314 = () => interopDefault(import('../pages/orders/index.vue' /* webpackChunkName: "pages/orders/index" */))
+const _52c8f1d6 = () => interopDefault(import('../pages/order/index.vue' /* webpackChunkName: "pages/order/index" */))
 const _388a01fd = () => interopDefault(import('../pages/patients/index.vue' /* webpackChunkName: "pages/patients/index" */))
 const _6ef7c746 = () => interopDefault(import('../pages/schedule/index.vue' /* webpackChunkName: "pages/schedule/index" */))
 const _a1a6d4d4 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
@@ -31,9 +31,9 @@ export const routerOptions = {
     component: _5166a73c,
     name: "laboratory"
   }, {
-    path: "/orders",
-    component: _09069314,
-    name: "orders"
+    path: "/order",
+    component: _52c8f1d6,
+    name: "order"
   }, {
     path: "/patients",
     component: _388a01fd,

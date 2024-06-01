@@ -8,6 +8,9 @@
   "UiUserLogin": {
     "description": "Auto imported from components/ui/UserLogin.vue"
   },
+  "UiUserMedication": {
+    "description": "Auto imported from components/ui/UserMedication.vue"
+  },
   "UiUserMedicine": {
     "description": "Auto imported from components/ui/UserMedicine.vue"
   },
@@ -16,6 +19,9 @@
   },
   "UiUserProgressCircular": {
     "description": "Auto imported from components/ui/UserProgressCircular.vue"
+  },
+  "UiUserRecentActivity": {
+    "description": "Auto imported from components/ui/UserRecentActivity.vue"
   },
   "UiUserSchedule": {
     "description": "Auto imported from components/ui/UserSchedule.vue"

@@ -2,7 +2,7 @@
     <v-row class="ma-0 pa-4 d-flex align-center mb-5 schedule-schedule-card-schedule">
         <v-col cols="3" class="ma-0 pa-0">
             <v-row class="ma-0 pa-0">
-                <img class="ma-0 pa-0 schedule-schedule-photo-patient" width="150" :src="photo" />
+                <img class="ma-0 pa-0 schedule-schedule-photo-patient" width="150" height="150" :src="photo" />
             </v-row>
         </v-col>
 

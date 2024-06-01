@@ -22,7 +22,7 @@
             </v-row>
 
             <v-row class="ma-0 pa-0 mt-2">
-                <p id="patients_prescription_indication" class="ma-0 pa-0 patients-prescription-indication">{{ prescription }}</p>
+                <p id="patients_prescription_indication" class="ma-0 pa-0 patients-prescription-indication">{{ medication }} {{ prescription }}</p>
             </v-row>
         </v-col>
     </v-row>
@@ -40,6 +40,10 @@ export default {
             default: ''
         },
         time: {
+            type: String,
+            default: ''
+        },
+        medication: {
             type: String,
             default: ''
         },
