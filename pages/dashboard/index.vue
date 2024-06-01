@@ -151,7 +151,7 @@
                                         </v-col>
 
                                         <v-col class="ma-0 pa-0">
-                                            <v-btn color="transparent" rounded elevation="0" class="ma-0 pa-0 px-1 dashboard-appointment-button">
+                                            <v-btn color="transparent" rounded elevation="0" class="ma-0 pa-0 px-1 dashboard-appointment-button" @click="showUpdate = true">
                                                 <v-col cols="2" class="ma-0 pa-0">
                                                     <v-row class="ma-0 pa-0">
                                                         <img width="20" class="ma-0 pa-0" src="../../assets/home/nav/schedule.svg" />
@@ -290,7 +290,7 @@
 
                         <v-col class="ma-0 pa-0 ml-5">
                             <v-row class="block-dashboard ma-0 pa-0 pl-5 pr-5" justify="center" align="center" style="height: 100%;">
-                                <v-col v-if="schedulePrev" class="ma-0 pa-0">
+                                <v-col v-if="schedulePrev.patient" class="ma-0 pa-0">
                                     <v-row class="ma-0 pa-0">
                                         <v-col class="ma-0 pa-0" cols="7" justify="center" align="center">
                                             <v-row class="ma-0 pa-0">
@@ -375,7 +375,7 @@
                                 </v-col>
 
                                 <v-col class="ma-0 pa-0">
-                                    <v-row v-if="!schedulePrev" class="ma-0 pa-0 d-flex align-center justify-center" align="center" justify="center">
+                                    <v-row v-if="!schedulePrev.patient" class="ma-0 pa-0 d-flex align-center justify-center" align="center" justify="center">
                                         <p class="ma-0 pa-0 dashboard-appointment-no-available align-center justify-center" align="center" justify="center">There are no previous appointments that ended within the last 15 minutes</p>
                                     </v-row>
                                 </v-col>
@@ -407,6 +407,137 @@
                 </v-col>
             </v-card-actions>
         </v-dialog>
+
+        <v-dialog v-model="showUpdate" persistent width="500" class="pa-5" transition="dialog-bottom-transition" align="center" justify="center" content-class="background-dialog">
+            <p class="mt-3" style="font-size: 25px">Update Schedule</p>
+
+            <v-card-text class="ma-0 pa-0 pl-6 pr-6 mt-5">
+                <v-form ref="formUpdateSchedule" v-model="validFormUpdateSchedule">
+                    <v-row class="ma-0 pa-0 mt-2 align-center justify-center" align="center" justify="center">
+                        <v-menu
+                            ref="date"
+                            v-model="datePickerVisible"
+                            :close-on-content-click="false"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                            class="ma-0 pa-0 align-center justify-center"
+                        >
+                            <template #activator="{ on, attrs }">
+                                <v-text-field
+                                    v-model="date_update_appointment"
+                                    rounded
+                                    label="Date"
+                                    style="border: 0.5px solid black !important; border-radius: 50px; height: 56px;"
+                                    v-bind="attrs"
+                                    readonly
+                                    v-on="on"
+                                    @click="date = true"
+                                    @input="datePickerVisible = false"
+                                    :rules="[rules.required]"
+                                    class="ma-0 pa-0"
+                                >
+                                    <template #append>
+                                        <v-row class="ma-0 pa-0 d-flex align-center schedule-icon-calendar" @click="openDatePicker">
+                                            <img src="../../assets/home/nav/schedule.svg" width="30px" class="ma-0 pa-0" style="cursor: pointer;" />
+                                        </v-row>
+                                    </template>
+                                </v-text-field>
+                            </template>
+
+                            <v-date-picker
+                                v-model="date_update_appointment"
+                                no-title
+                                scrollable
+                                :min="getToday()"
+                                locale="es"
+                                header-color="#ffccba"
+                                @input="closeDatePicker"
+                            />
+                        </v-menu>
+                    </v-row>
+
+                    <v-row class="ma-0 pa-0 mt-2 align-center justify-center" align="center" justify="center">
+                        <v-menu
+                            ref="time"
+                            v-model="clockPickerVisible"
+                            :close-on-content-click="false"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                            class="ma-0 pa-0 align-center justify-center"
+                        >
+                            <template #activator="{ on, attrs }">
+                                <v-text-field
+                                    v-model="time_update_appointment"
+                                    rounded
+                                    label="Time"
+                                    :disabled="!date_update_appointment"
+                                    style="border: 0.5px solid black !important; border-radius: 50px; height: 56px;"
+                                    v-bind="attrs"
+                                    clearable
+                                    readonly
+                                    v-on="on"
+                                    @click="time = true"
+                                    @input="clockPickerVisible = false"
+                                    :rules="[rules.required]"
+                                    class="ma-0 pa-0"
+                                >
+                                    <template #append>
+                                        <v-row class="ma-0 pa-0 d-flex align-center schedule-icon-calendar" @click="openClockPicker">
+                                            <img src="../../assets/home/schdule/clock.svg" width="30px" class="ma-0 pa-0" style="cursor: pointer;" />
+                                        </v-row>
+                                    </template>
+                                </v-text-field>
+                            </template>
+
+                            <v-time-picker
+                                v-model="time_update_appointment"
+                                :allowed-hours="availableAllHours"
+                                :allowed-minutes="availableAllMinutes"
+                                class="mt-4"
+                                format="24hr"
+                                scrollable
+                                header-color="#ffccba"
+                                :disabled="!date_update_appointment"
+                                min="9:00"
+                                max="19:30"
+                                @click:hour="availableMinutes"
+                                @click="availableHours"
+                                @input="closeClockPicker"
+                            />
+                        </v-menu>
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-combobox
+                            :rules="[rules.required]"
+                            class="ma-0 pa-0"
+                            v-model="room_update_appointment"
+                            :items="rooms"
+                            clearable
+                            outlined
+                            rounded
+                            label="Room"
+                        />
+                    </v-row>
+                </v-form>
+            </v-card-text>
+
+            <v-card-actions class="ma-0 pa-0">
+                <v-col cols="6">
+                    <v-btn block rounded color="#ffaa92" class="ma-0 pa-6 mt-10" @click="showUpdate = false">
+                        <span class="ma-0 pa-0 dashboard-dialog-button-text">Cancel</span>
+                    </v-btn>
+                </v-col>
+
+                <v-col cols="6">
+                    <v-btn block rounded color="#ffaa92" class="ma-0 pa-6 mt-10" @click="updateAppointment ()">
+                        <span class="ma-0 pa-0 dashboard-dialog-button-text">Update</span>
+                    </v-btn>
+                </v-col>
+            </v-card-actions>
+        </v-dialog>
     </div>
 </template>
 
@@ -428,6 +559,29 @@ export default {
             schedule_details: [],
             idDelete: '',
             showDelete: false,
+            showUpdate: false,
+            date_update_appointment: '',
+            time_update_appointment: '',
+            room_update_appointment: null,
+            rooms:
+            [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10'
+            ],
+            datePickerVisible: false,
+            clockPickerVisible: false,
+            availableTimes: [],
+            availableAllHours: [],
+            availableAllMinutes: [],
+            validFormUpdateSchedule: false,
             payment: 100,
             medicare: 0,
             doctor_photo: '',
@@ -436,7 +590,15 @@ export default {
             showAlert: false,
             alertText: '',
             alertColor: '',
-            alertType: ''
+            alertType: '',
+            rules: {
+                required: value => !!value || 'Required field',
+                counter: value => value.length <= 20 || 'Max 10 characters',
+                email: value => {
+                    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    return pattern.test(value) || 'Invalid e-mail.'
+                }
+            }
         }
     },
     computed: {
@@ -452,6 +614,11 @@ export default {
         this.fetchAllChanges()
 
         this.medicare = localStorage.getItem('TotalPrice')
+    },
+    watch: {
+        date_update_appointment (newDate) {
+            this.fetchAvailableTimes(newDate)
+        }
     },
     methods: {
         async getDoctors () {
@@ -765,6 +932,163 @@ export default {
                 }
             } catch (error) {
                 console.error('Error fetching all changes:', error)
+            }
+        },
+        openDatePicker () {
+            this.datePickerVisible = true
+        },
+        closeDatePicker () {
+            this.datePickerVisible = false
+        },
+        openClockPicker () {
+            this.clockPickerVisible = true
+        },
+        closeClockPicker () {
+            this.clockPickerVisible = false
+        },
+        async fetchAvailableTimes (date) {
+            const url = `/get-available-date-time-schedules?email_doctor=${this.doctor.email}&date=${date}`
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }
+
+            console.log('@ Keyla => url available times', url)
+
+            this.$axios.get(url, config)
+                .then((res) => {
+                    if (res.data.availableTimes) {
+                        console.log('@ Keyla => available times', res.data.availableTimes)
+
+                        this.availableTimes = res.data.availableTimes
+
+                        this.availableAllHours = [...new Set(this.availableTimes.map(time => parseInt(time.split(':')[0])))]
+
+                        console.log('@ Keyla => available hours', this.availableAllHours)
+
+                        return this.availableAllHours
+                    }
+                })
+                .catch((err) => {
+                    console.log('Error fetching available times', err)
+                })
+        },
+        availableHours () {
+            if (this.availableTimes) {
+                return this.availableAllHours.filter(hour => {
+                    const selectedHour = parseInt(this.time_update_appointment.split(':')[0])
+
+                    return hour >= selectedHour
+                })
+            } else {
+                return this.availableAllHours
+            }
+        },
+        async availableMinutes (selectedHour) {
+            if (this.availableTimes && this.availableAllHours) {
+                const existingReservations = this.schedules.filter(schedule => {
+                    const [hour, minute] = schedule.time.split(':').map(Number)
+
+                    console.log('@ Keyla => selected hour', selectedHour)
+                    console.log('@ Keyla => hour minute', hour, minute)
+                    console.log('@ Keyla => not available minute', minute)
+
+                    return hour === selectedHour && schedule.date === this.date_update_appointment
+                })
+
+                console.log('@ Keyla => existing reservations', existingReservations)
+
+                const occupiedMinutes = existingReservations.map(schedule => parseInt(schedule.time.split(':')[1]))
+                const allAvailableMinutes = this.availableTimes.flatMap(time => {
+                    const [hour, minute] = time.split(':').map(Number)
+
+                    return hour === selectedHour ? [minute.toString().padStart(2, '0')] : []
+                })
+
+                console.log('@ Keyla => allAvailableMinutes', allAvailableMinutes)
+
+                const availableMinutes = allAvailableMinutes.filter(minute => !occupiedMinutes.includes(parseInt(minute)))
+
+                console.log('@ Keyla => available minutes', availableMinutes)
+
+                this.availableAllMinutes = availableMinutes.map(minute => parseInt(minute, 10))
+
+                console.log('@ Keyla => available all minutes', this.availableAllMinutes)
+
+                return this.availableAllMinutes
+            } else {
+                return []
+            }
+        },
+        async updateAppointment () {
+            if (this.$refs.formUpdateSchedule.validate()) {
+                const url = `/schedules/${this.scheduleNext.id}`
+                const data = {
+                    date: this.date_update_appointment,
+                    time: this.time_update_appointment,
+                    room: this.room_update_appointment
+                }
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${this.token}`
+                    }
+                }
+
+                console.log('this.scheduleNext.id', this.scheduleNext.id)
+                console.log('data', data)
+
+                this.$axios.put(url, data, config)
+                    .then((res) => {
+                        console.log('@ Keyla => Response ', res)
+
+                        if (res.data.message === 'Success') {
+                            this.showAlert = true
+                            this.alertText = res.data.message
+                            this.alertColor = '#6CDACE'
+                            this.alertType = 'success'
+
+                            this.fetchAllSchedules()
+                            this.fetchAllChanges()
+
+                            this.showUpdate = false
+
+                            setTimeout(() => {
+                                this.showAlert = false
+                            }, 3000)
+
+                            this.$refs.formUpdateSchedule.reset()
+                        }
+                    })
+                    .catch((err) => {
+                        console.log('@ Keyla => Error Frontend', err)
+
+                        if (err.response && err.response.data && err.response.data.message) {
+                            this.showAlert = true
+                            this.alertText = err.response.data.message
+                            this.alertColor = '#FF9F8E'
+                            this.alertType = 'warning'
+                        }
+
+                        setTimeout(() => {
+                            this.showAlert = false
+                        }, 3000)
+
+                        this.date_update_appointment = null
+                        this.time_update_appointment = null
+                        this.room_update_appointment = null
+                    })
+            } else {
+                console.log('@ Keyla => Missing fields')
+
+                this.showAlert = true
+                this.alertText = 'Missing fields'
+                this.alertColor = '#FF9F8E'
+                this.alertType = 'warning'
+
+                setTimeout(() => {
+                    this.showAlert = false
+                }, 3000)
             }
         }
     }
