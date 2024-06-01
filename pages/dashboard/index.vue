@@ -289,10 +289,10 @@
                         </v-col>
 
                         <v-col class="ma-0 pa-0 ml-5">
-                            <v-row class="block-dashboard ma-0 pa-0 pl-5 pr-5" justify="center" align="center" style="height: 100%;">
-                                <v-col v-if="schedulePrev.patient" class="ma-0 pa-0">
+                            <v-row class="block-dashboard ma-0 pa-0 px-10" justify="center" align="center" style="height: 100%;">
+                                <v-col class="ma-0 pa-0">
                                     <v-row class="ma-0 pa-0">
-                                        <v-col class="ma-0 pa-0" cols="7" justify="center" align="center">
+                                        <v-col class="ma-0 pa-0" cols="8" justify="center" align="center">
                                             <v-row class="ma-0 pa-0">
                                                 <p class="ma-0 pa-0" style="font-size: 15px;">Your Payment</p>
                                             </v-row>
@@ -332,7 +332,7 @@
                                     <v-row class="ma-0 pa-0 mt-4">
                                         <v-col v-if="schedulePrev && schedulePrev.patient" class="ma-0 pa-0">
                                             <v-row class="ma-0 pa-0">
-                                                <p id="recent_bills_paid" class="ma-0 pa-0" style="font-size: 13px;">{{ schedulePrev.patient.address }}</p>
+                                                <p id="recent_bills_paid" class="ma-0 pa-0" style="font-size: 13px;">Pay on {{ schedulePrev.date }} to {{ schedulePrev.doctor.name }}</p>
                                             </v-row>
 
                                             <v-row class="ma-0 pa-0">
@@ -349,10 +349,16 @@
                                                 </v-col>
                                             </v-row>
                                         </v-col>
+
+                                        <v-col v-if="!schedulePrev.patient" class="ma-0 pa-0 mt-4">
+                                            <v-row class="ma-0 pa-0">
+                                                <p class="ma-0 pa-0 dashboard-appointment-no-available align-center justify-center" align="center" justify="center">There are no previous appointments that ended within the last 15 minutes</p>
+                                            </v-row>
+                                        </v-col>
                                     </v-row>
 
-                                    <v-row class="ma-0 pa-0 mt-5">
-                                        <v-col cols="5" class="ma-0 pa-2 pl-4 pr-4" style="border: 1px solid #575757; border-radius: 50px;">
+                                    <v-row v-if="schedulePrev && schedulePrev.patient" class="ma-0 pa-0 mt-5">
+                                        <v-col cols="auto" class="ma-0 pa-2 pl-4 pr-4" style="border: 1px solid #575757; border-radius: 50px;">
                                             <v-row class="ma-0 pa-0">
                                                 <p class="ma-0 pa-0" style="font-size: 13px; font-weight: 600;">Next Appointment</p>
                                             </v-row>
@@ -366,17 +372,11 @@
 
                                                 <v-col class="ma-0 pa-0">
                                                     <v-row class="ma-0 pa-0">
-                                                        <p class="ma-0 pa-0" style="font-size: 13px;">Reschedule</p>
+                                                        <p class="ma-0 pa-0" style="font-size: 13px;">Schedule</p>
                                                     </v-row>
                                                 </v-col>
                                             </v-row>
                                         </v-col>
-                                    </v-row>
-                                </v-col>
-
-                                <v-col class="ma-0 pa-0">
-                                    <v-row v-if="!schedulePrev.patient" class="ma-0 pa-0 d-flex align-center justify-center" align="center" justify="center">
-                                        <p class="ma-0 pa-0 dashboard-appointment-no-available align-center justify-center" align="center" justify="center">There are no previous appointments that ended within the last 15 minutes</p>
                                     </v-row>
                                 </v-col>
                             </v-row>
@@ -582,7 +582,7 @@ export default {
             availableAllHours: [],
             availableAllMinutes: [],
             validFormUpdateSchedule: false,
-            payment: 100,
+            payment: 0,
             medicare: 0,
             doctor_photo: '',
             doctor_name: '',
@@ -603,7 +603,10 @@ export default {
     },
     computed: {
         total () {
-            return (Number(this.payment) + Number(this.medicare)).toFixed(2)
+            const baseAmount = Number(this.medicare)
+            const additionalAmount = this.schedulePrev.patient ? 100 : 0
+
+            return (baseAmount + additionalAmount).toFixed(2)
         }
     },
     mounted () {
@@ -771,14 +774,12 @@ export default {
         findPrevAppointment () {
             const currentTime = new Date()
             const currentTimeMinus15 = new Date(currentTime.getTime() - 15 * 60000)
+            const currentTimePlus30 = new Date(currentTime.getTime() + 30 * 60000)
 
             const prevAppointments = this.schedules.filter(schedule => {
                 const scheduleDateTime = new Date(schedule.date.split('/').reverse().join('-') + 'T' + schedule.time + ':00')
-
                 return scheduleDateTime < currentTime && scheduleDateTime >= currentTimeMinus15
             })
-
-            console.log('@ Keyla => prev Appointments ', prevAppointments)
 
             if (prevAppointments.length > 0) {
                 prevAppointments.sort((a, b) => {
@@ -794,13 +795,35 @@ export default {
                 console.log('@ Keyla => Previous Appointment ', prevAppointment)
 
                 this.schedulePrev = prevAppointment
-
                 return this.schedulePrev
             } else {
-                console.log('@ Keyla => No hay citas anteriores que finalizaron dentro de los últimos 15 minutos')
+                const prevAppointments = this.schedules.filter(schedule => {
+                    const scheduleDateTime = new Date(schedule.date.split('/').reverse().join('-') + 'T' + schedule.time + ':00')
+                    return scheduleDateTime > currentTime && scheduleDateTime <= currentTimePlus30
+                })
 
-                return null
+                if (prevAppointments.length > 0) {
+                    prevAppointments.sort((a, b) => {
+                        if (a.date !== b.date) {
+                            return a.date.localeCompare(b.date)
+                        } else {
+                            return a.time.localeCompare(b.time)
+                        }
+                    })
+
+                    const prevAppointment = prevAppointments[0]
+
+                    console.log('@ Keyla => Next Appointment ', prevAppointment)
+
+                    this.schedulePrev = prevAppointment
+
+                    return this.schedulePrev
+                }
             }
+
+            console.log('@ Keyla => No hay citas en el rango de tiempo especificado')
+
+            return null
         },
         cancelBooking (id) {
             this.idDelete = id
