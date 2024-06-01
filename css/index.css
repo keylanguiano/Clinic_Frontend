@@ -100,6 +100,13 @@
     left: 0 !important;
 }
 
+.nav-doctor-photo
+{
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    object-position: top !important;
+}
+
 .dashboard-doctor-photo
 {
     width: 35px !important;
@@ -137,6 +144,11 @@
     width: 35px !important;
     object-fit: cover !important;
     object-position: top !important;
+}
+
+.dashboard-appointment-no-available
+{
+    font-size: 20px !important;
 }
 
 .block-dashboard

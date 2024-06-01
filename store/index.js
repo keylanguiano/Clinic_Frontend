@@ -1,23 +1,29 @@
 export const state = () => ({
-    user: null,
-    token: null
+    doctor: null,
+    token: null,
+    TotalPrice: parseInt(localStorage.getItem('TotalPrice'), 10) || 0
 })
 
 export const mutations = {
-    setUser (state, user) {
+    setDoctor (state, user) {
         state.user = user
     },
     setToken (state, token) {
         state.token = token
     },
-    clearUser (state) {
-        state.user = null
+    clearDoctor (state) {
+        state.doctor = null
         state.token = null
+    },
+    setTotalPrice (state, price) {
+        state.TotalPrice = price
+        localStorage.setItem('TotalPrice', price)
     }
 }
 
 export const getters = {
     isAuthenticated: state => !!state.user,
-    getUser: state => state.user,
-    getToken: state => state.token
+    getDoctor: state => state.user,
+    getToken: state => state.token,
+    getTotalPrice: state => state.TotalPrice
 }

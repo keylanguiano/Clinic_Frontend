@@ -22,17 +22,17 @@
 
         <v-row class="ma-0 pa-0 mt-6 d-flex justify-center">
             <v-col cols="1" class="ma-0 pa-0 align-center justify-center">
-                <img class="ma-0 pa-0" width="30" src="../../assets/home/orders/substract.svg" />
+                <img class="ma-0 pa-0" width="30" src="../../assets/home/orders/substract.svg" @click="decrementQuantity" />
             </v-col>
 
             <v-col cols="3" class="ma-0 pa-0">
                 <v-row class="ma-0 pa-0 align-center justify-center">
-                    <p class="ma-0 pa-0 orders-medicine-add-text align-center justify-center">add</p>
+                    <p class="ma-0 pa-0 orders-medicine-add-text align-center justify-center">{{ count }}</p>
                 </v-row>
             </v-col>
 
             <v-col cols="1" class="ma-0 pa-0 align-center justify-center">
-                <img class="ma-0 pa-0" width="30" src="../../assets/home/orders/add.svg" />
+                <img class="ma-0 pa-0" width="30" src="../../assets/home/orders/add.svg" @click="incrementQuantity" />
             </v-col>
         </v-row>
     </v-col>
@@ -60,7 +60,47 @@ export default {
     },
     data () {
         return {
-            //
+            quantity: 0,
+            count: 0
+        }
+    },
+    mounted () {
+        this.$root.$on('countUpdated', this.countUpdated)
+
+        const storedQuantity = localStorage.getItem('Quantity' + this.name)
+        const storedCount = localStorage.getItem('Count' + this.name)
+
+        if (storedQuantity !== null) {
+            this.quantity = parseInt(storedQuantity)
+            this.count = parseInt(storedCount)
+        }
+
+        console.log('Count inicial:', this.count)
+        console.log('Quantity inicial:', this.quantity)
+    },
+    methods: {
+        incrementQuantity () {
+            this.count++
+            this.updateLocalStorage()
+        },
+        decrementQuantity () {
+            if (this.count > 0) {
+                this.count--
+                this.updateLocalStorage()
+            }
+        },
+        updateLocalStorage () {
+            localStorage.setItem('Count' + this.name, this.count)
+            localStorage.setItem('Quantity' + this.name, (this.count * this.price))
+
+            const storedQuantity = localStorage.getItem('Quantity' + this.name)
+            const storedCount = localStorage.getItem('Count' + this.name)
+
+            console.log('Count', storedQuantity)
+            console.log('Quantity:', storedCount)
+        },
+        countUpdated () {
+            this.count = 0
         }
     }
 }

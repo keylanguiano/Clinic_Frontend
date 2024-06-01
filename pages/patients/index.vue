@@ -23,7 +23,7 @@
             <v-col class="ma-0 pa-0" v-if="patient.name">
                 <v-row class="ma-0 pa-0 mt-6" >
                     <v-col cols="3" class="ma-0 pa-0">
-                        <img class="ma-0 pa-0 patient-photo" width="150" :src="patient.photo" />
+                        <img class="ma-0 pa-0 patient-photo" width="150" height="150" :src="patient.photo" />
                     </v-col>
 
                     <v-col class="ma-0 pa-0">
@@ -170,7 +170,7 @@
                 <v-row class="ma-0 pa-0 mt-10" v-if="show_prescription">
                     <v-col class="ma-0 pa-0">
                         <v-row class="ma-0 pa-0" v-for="(schedule_details, index) in schedules_details" :key="index">
-                            <user-prescription class="ma-0 pa-0 mb-4" :doctor_name="schedule_details.doctor.name" :prescription="schedule_details.prescription" :time="schedule_details.schedule.time" :date="schedule_details.schedule.date" />
+                            <user-prescription class="ma-0 pa-0 mb-4" :doctor_name="schedule_details.doctor.name" :medication="schedule_details.medication" :prescription="schedule_details.prescription" :time="schedule_details.schedule.time" :date="schedule_details.schedule.date" />
                         </v-row>
                     </v-col>
                 </v-row>
@@ -301,7 +301,6 @@
 </template>
 
 <script>
-import * as jose from 'jose'
 import JsPDF from 'jspdf'
 import 'jspdf-autotable'
 import PoiretOne from '../../assets/PoiretOne-Regular.ttf'
@@ -312,9 +311,8 @@ export default {
     auth: true,
     data () {
         return {
-            doctors: [],
-            claims: [],
-            doctor: [],
+            token: '',
+            doctor: '',
             prescriptions: [],
             checkups: [],
             documents: [],
@@ -359,65 +357,15 @@ export default {
         }
     },
     mounted () {
-        this.email_doctor()
-        this.getDoctors()
+        this.token = localStorage.getItem('Token')
+        this.doctor = localStorage.getItem('Doctor')
+
+        console.log('token', this.token)
+        console.log('doctor', this.doctor)
+
         this.getPatients()
     },
     methods: {
-        async getDoctors () {
-            const url = '/get-all-doctors'
-
-            this.$axios.get(url)
-                .then((res) => {
-                    console.log('@ Keyla => Response ', res)
-
-                    if (res.data.message === 'Success') {
-                        this.doctors = res.data.doctors.map(doctor => ({
-                            ...doctor,
-                            specialist: Array.isArray(doctor.specialist) ? doctor.specialist : doctor.specialist.split(','),
-                            degree: Array.isArray(doctor.degree) ? doctor.degree : doctor.degree.split(',')
-                        }))
-
-                        this.getDoctor()
-                    }
-                })
-                .catch((err) => {
-                    console.log('@ Keyla => Error Frontend', err)
-                })
-        },
-        email_doctor () {
-            const token = localStorage.getItem('Token')
-
-            console.log('Token email doctor funcion:', token)
-
-            const secret = new TextEncoder().encode('MySecretPassword')
-
-            if (token) {
-                try {
-                    const claims = jose.decodeJwt(token, secret)
-                    console.log('@ Keyla => Claims:', claims)
-
-                    this.claims = claims
-                } catch (error) {
-                    console.error('JWT Decryption Error:', error)
-                }
-            } else {
-                console.error('Token not found in localStorage')
-                return null
-            }
-        },
-        getDoctor () {
-            console.log('@ Keyla => Claims:', this.claims)
-            console.log('@ Keyla => Doctors:', this.doctors)
-
-            if (this.claims) {
-                this.doctor = this.doctors.find(doctor => this.claims.email === doctor.email)
-
-                console.log('Doctor encontrado:', this.doctor)
-            } else {
-                console.error('Claims not found')
-            }
-        },
         toggleSection (section) {
             this.show_prescription = false
             this.show_checkups = false
@@ -438,8 +386,13 @@ export default {
         },
         async getPatients () {
             const url = '/get-all-patients'
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }
 
-            this.$axios.get(url)
+            this.$axios.get(url, config)
                 .then((res) => {
                     console.log('@ Keyla => Response ', res)
 
@@ -478,8 +431,13 @@ export default {
         },
         async fetchAllSchedulesDetails () {
             const url = '/get-all-schedules-details'
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }
 
-            this.$axios.get(url)
+            this.$axios.get(url, config)
                 .then((res) => {
                     console.log('@ Keyla => Response ', res)
 
@@ -489,7 +447,7 @@ export default {
                         console.log('@ Keyla => All schedules details ', this.schedules_details)
 
                         this.schedules_details = this.schedules_details.filter(scheduleDetails =>
-                            (scheduleDetails.email_doctor === this.doctor.email &&
+                            (scheduleDetails.email_doctor === this.doctor &&
                             scheduleDetails.email_patient === this.patient.email))
 
                         this.getLastDate()
@@ -664,6 +622,7 @@ export default {
 
                 doc.setFontSize(12)
                 yPos = addMultilineText(`Treatment: ${patientData.treatment}`, xPos, yPos)
+                doc.text(`Medication: ${patientData.medication}`, xPos, yPos); yPos += 5
                 yPos = addMultilineText(`Prescription: ${patientData.prescription}`, xPos, yPos)
 
                 yPos += 15
@@ -725,9 +684,14 @@ export default {
                 const data = {
                     payment_completed: true
                 }
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${this.token}`
+                    }
+                }
 
                 try {
-                    const response = await this.$axios.put(url, data)
+                    const response = await this.$axios.put(url, data, config)
                     console.log(`Updated payment completion status for ID ${id}:`, response.data)
                 } catch (error) {
                     console.error(`Error updating payment completion status for ID ${id}:`, error)

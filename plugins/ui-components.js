@@ -8,6 +8,8 @@ import userDoctor from '@/components/ui/UserDoctor.vue'
 import userProgressCircular from '@/components/ui/UserProgressCircular.vue'
 import userPrescription from '@/components/ui/UserPrescription.vue'
 import userMedicine from '@/components/ui/UserMedicine.vue'
+import userMedication from '@/components/ui/UserMedication.vue'
+import userRecentActivity from '@/components/ui/UserRecentActivity.vue'
 
 Vue.component('UserLogin', userLogin)
 Vue.component('UserAlert', userAlert)
@@ -17,3 +19,5 @@ Vue.component('UserDoctor', userDoctor)
 Vue.component('UserProgressCircular', userProgressCircular)
 Vue.component('UserPrescription', userPrescription)
 Vue.component('UserMedicine', userMedicine)
+Vue.component('UserMedication', userMedication)
+Vue.component('UserRecentActivity', userRecentActivity)
