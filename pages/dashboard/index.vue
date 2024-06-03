@@ -85,7 +85,21 @@
 
                             <v-row v-if="scheduleNext.id" class="ma-0 pa-0 mt-4 pl-8 pr-8">
                                 <v-col class="ma-0 pa-0">
-                                    <v-row class="ma-0 pa-0">
+                                    <v-row class="ma-0 pa-0 mt-1">
+                                        <v-col cols="2" class="ma-0 pa-0">
+                                            <v-row class="ma-0 pa-0">
+                                                <p style="font-size: 13px; font-weight: 600;" class="ma-0 pa-0">Patient</p>
+                                            </v-row>
+                                        </v-col>
+
+                                        <v-col class="ma-0 pa-0">
+                                            <v-row class="ma-0 pa-0">
+                                                <p id="appointment_patient" class="ma-0 pa-0 dashboard-appointment-text">{{ scheduleNext.name_patient }}</p>
+                                            </v-row>
+                                        </v-col>
+                                    </v-row>
+
+                                    <v-row class="ma-0 pa-0 mt-1">
                                         <v-col cols="6" class="ma-0 pa-0">
                                             <v-row class="ma-0 pa-0">
                                                 <v-col cols="3" class="ma-0 pa-0">
@@ -119,8 +133,8 @@
                                         </v-col>
                                     </v-row>
 
-                                    <v-row class="ma-0 pa-0 mt-5">
-                                        <v-col cols="3" class="ma-0 pa-0">
+                                    <v-row class="ma-0 pa-0 mt-1">
+                                        <v-col cols="2" class="ma-0 pa-0">
                                             <v-row class="ma-0 pa-0">
                                                 <p style="font-size: 13px; font-weight: 600;" class="ma-0 pa-0">Address</p>
                                             </v-row>
@@ -222,7 +236,19 @@
                                     <p class="ma-0 pa-1 pl-2 pr-2 block-alternative-dashboard" style="color: white; font-size: 14px; font-weight: 600;">{{ schedule_details.degree }}</p>
                                 </v-row>
 
-                                <v-row class="ma-0 pa-0 mt-7">
+                                <v-row v-if="schedule_details && schedule_details.patient" class="ma-0 pa-0 mt-5">
+                                    <v-col cols="7" class="ma-0 pa-0">
+                                        <v-row class="ma-0 pa-0">
+                                            <p id="current_condition_diagnostic_name" style="font-size: 18px; font-weight: 600;" class="ma-0 pa-0">Patient</p>
+                                        </v-row>
+
+                                        <v-row class="ma-0 pa-0">
+                                            <p id="current_condition_diagnostic_info" style="font-size: 15px;" class="ma-0 pa-0">{{ schedule_details.patient.name }}</p>
+                                        </v-row>
+                                    </v-col>
+                                </v-row>
+
+                                <v-row class="ma-0 pa-0 mt-4">
                                     <v-col cols="7" class="ma-0 pa-0">
                                         <v-row class="ma-0 pa-0">
                                             <p id="current_condition_diagnostic_name" style="font-size: 18px; font-weight: 600;" class="ma-0 pa-0">{{ schedule_details.diagnostic }}</p>
@@ -233,34 +259,34 @@
                                         </v-row>
                                     </v-col>
 
-                                    <v-col cols="1" />
+                                    <v-btn class="ma-0 pa-0 px-4 py-7 dashboard-current-condition-btn-schedule" elevation="0" @click="showScheduleNextCurrentCondition = true">
+                                        <v-col class="ma-0 pa-0">
+                                            <v-row class="ma-0 pa-0">
+                                                <p style="font-size: 13px; font-weight: 600;" class="ma-0 pa-0">Next Appointment </p>
+                                            </v-row>
 
-                                    <v-col class="ma-0 pa-0">
-                                        <v-row class="ma-0 pa-0">
-                                            <p style="font-size: 13px; font-weight: 600;" class="ma-0 pa-0">Next Appointment </p>
-                                        </v-row>
+                                            <v-row class="ma-0 pa-0">
+                                                <v-col class="ma-0 pa-0">
+                                                    <v-row class="ma-0 pa-0">
+                                                        <v-col cols="2" class="ma-0 pa-0">
+                                                            <v-row class="ma-0 pa-0">
+                                                                <img width="20" class="ma-0 pa-0" src="../../assets/home/nav/schedule.svg" />
+                                                            </v-row>
+                                                        </v-col>
 
-                                        <v-row class="ma-0 pa-0">
-                                            <v-col class="ma-0 pa-0">
-                                                <v-row class="ma-0 pa-0">
-                                                    <v-col cols="2" class="ma-0 pa-0">
-                                                        <v-row class="ma-0 pa-0">
-                                                            <img width="20" class="ma-0 pa-0" src="../../assets/home/nav/schedule.svg" />
-                                                        </v-row>
-                                                    </v-col>
-
-                                                    <v-col class="ma-0 pa-0">
-                                                        <v-row class="ma-0 pa-0 ml-2">
-                                                            <p class="ma-0 pa-0" style="font-size: 13px;">Reschedule</p>
-                                                        </v-row>
-                                                    </v-col>
-                                                </v-row>
-                                            </v-col>
-                                        </v-row>
-                                    </v-col>
+                                                        <v-col class="ma-0 pa-0">
+                                                            <v-row class="ma-0 pa-0 ml-2">
+                                                                <p class="ma-0 pa-0" style="font-size: 13px;">Schedule</p>
+                                                            </v-row>
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-col>
+                                            </v-row>
+                                        </v-col>
+                                    </v-btn>
                                 </v-row>
 
-                                <v-row class="ma-0 pa-0 mt-7">
+                                <v-row class="ma-0 pa-0 mt-5">
                                     <v-col cols="6" class="ma-0 pa-0">
                                         <v-row class="ma-0 pa-0">
                                             <p style="font-size: 15px; font-weight: 600;" class="ma-0 pa-0">Primary Doctor</p>
@@ -330,9 +356,17 @@
                                     </v-row>
 
                                     <v-row class="ma-0 pa-0 mt-4">
-                                        <v-col v-if="schedulePrev && schedulePrev.patient" class="ma-0 pa-0">
+                                        <v-col v-if="scheduleRecent && scheduleRecent.patient" class="ma-0 pa-0">
                                             <v-row class="ma-0 pa-0">
-                                                <p id="recent_bills_paid" class="ma-0 pa-0" style="font-size: 13px;">Pay on {{ schedulePrev.date }} to {{ schedulePrev.doctor.name }}</p>
+                                                <p id="recent_bills_paid" class="ma-0 pa-0" style="font-size: 13px;">Pay on {{ scheduleRecent.date }} to {{ scheduleRecent.doctor.name }}</p>
+                                            </v-row>
+
+                                            <v-row class="ma-0 pa-0">
+                                                <p class="ma-0 pa-0" style="font-size: 13px;">{{ scheduleRecent.patient.name }}</p>
+                                            </v-row>
+
+                                            <v-row class="ma-0 pa-0">
+                                                <p class="ma-0 pa-0" style="font-size: 13px;">Appointment: {{ scheduleRecent.time }}</p>
                                             </v-row>
 
                                             <v-row class="ma-0 pa-0">
@@ -344,38 +378,52 @@
 
                                                 <v-col class="ma-0 pa-0">
                                                     <v-row class="ma-0 pa-0">
-                                                        <p id="recent_bills_address" class="ma-0 pa-0" style="font-size: 13px;">{{ schedulePrev.patient.address }}</p>
+                                                        <p id="recent_bills_address" class="ma-0 pa-0" style="font-size: 13px;">{{ scheduleRecent.patient.address }}</p>
                                                     </v-row>
                                                 </v-col>
                                             </v-row>
                                         </v-col>
 
-                                        <v-col v-if="!schedulePrev.patient" class="ma-0 pa-0 mt-4">
-                                            <v-row class="ma-0 pa-0">
-                                                <p class="ma-0 pa-0 dashboard-appointment-no-available align-center justify-center" align="center" justify="center">There are no previous appointments that ended within the last 15 minutes</p>
+                                        <v-col v-if="!scheduleRecent.patient" class="ma-0 pa-0 mt-4">
+                                            <v-row class="ma-0 pa-0 px-3">
+                                                <p class="ma-0 pa-0 dashboard-appointment-no-available align-center justify-center" align="center" justify="center">There are no appointments in progress or that have concluded in the last 15 minutes.</p>
+                                            </v-row>
+
+                                            <v-row class="ma-0 pa-0 mt-4" align="end" justify="end">
+                                                <v-col class="ma-0 pa-0 d-flex flex-column align-center justify-center" cols="1" justify="center" align="center">
+                                                    <img class="ma-0 pa-0" src="../../assets/home/dashboard/more.svg" />
+                                                </v-col>
                                             </v-row>
                                         </v-col>
                                     </v-row>
 
-                                    <v-row v-if="schedulePrev && schedulePrev.patient" class="ma-0 pa-0 mt-5">
-                                        <v-col cols="auto" class="ma-0 pa-2 pl-4 pr-4" style="border: 1px solid #575757; border-radius: 50px;">
-                                            <v-row class="ma-0 pa-0">
-                                                <p class="ma-0 pa-0" style="font-size: 13px; font-weight: 600;">Next Appointment</p>
-                                            </v-row>
-
-                                            <v-row class="ma-0 pa-0">
-                                                <v-col cols="3" class="ma-0 pa-0" style="justify-content: center; align-content: center;">
+                                    <v-row v-if="scheduleRecent && scheduleRecent.patient" class="ma-0 pa-0 mt-5">
+                                        <v-col class="ma-0 pa-0">
+                                            <v-btn class="ma-0 pa-0 py-7 px-4 dashboard-recent-bills-btn-schedule" @click="showScheduleNextRecent = true">
+                                                <v-col cols="auto" class="ma-0 pa-0">
                                                     <v-row class="ma-0 pa-0">
-                                                        <img width="20" class="ma-0 pa-0" src="../../assets/home/nav/schedule.svg" />
+                                                        <p class="ma-0 pa-0 dashboard-recent-bills-btn-schedule-title">Next Appointment</p>
+                                                    </v-row>
+
+                                                    <v-row class="ma-0 pa-0">
+                                                        <v-col cols="3" class="ma-0 pa-0" style="">
+                                                            <v-row class="ma-0 pa-0">
+                                                                <img width="20" class="ma-0 pa-0 dashboard-recent-bills-btn-schedule-text" src="../../assets/home/nav/schedule.svg" />
+                                                            </v-row>
+                                                        </v-col>
+
+                                                        <v-col class="ma-0 pa-0">
+                                                            <v-row class="ma-0 pa-0">
+                                                                <p class="ma-0 pa-0">Schedule</p>
+                                                            </v-row>
+                                                        </v-col>
                                                     </v-row>
                                                 </v-col>
+                                            </v-btn>
+                                        </v-col>
 
-                                                <v-col class="ma-0 pa-0">
-                                                    <v-row class="ma-0 pa-0">
-                                                        <p class="ma-0 pa-0" style="font-size: 13px;">Schedule</p>
-                                                    </v-row>
-                                                </v-col>
-                                            </v-row>
+                                        <v-col class="ma-0 pa-0 d-flex flex-column align-center justify-center" cols="1" justify="center" align="center">
+                                            <img class="ma-0 pa-0" src="../../assets/home/dashboard/more.svg" />
                                         </v-col>
                                     </v-row>
                                 </v-col>
@@ -413,6 +461,54 @@
 
             <v-card-text class="ma-0 pa-0 pl-6 pr-6 mt-5">
                 <v-form ref="formUpdateSchedule" v-model="validFormUpdateSchedule">
+                    <v-row width="100%" class="ma-0 mt-0">
+                        <v-text-field
+                            v-model="name_update_appointment"
+                            disabled
+                            label="Name"
+                            type="text"
+                            :rules="[rules.required]"
+                            rounded
+                            outlined
+                        />
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-text-field
+                            v-model="email_update_appointment"
+                            disabled
+                            label="Email"
+                            type="email"
+                            :rules="[rules.required, rules.email]"
+                            rounded
+                            outlined
+                        />
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-text-field
+                            v-model="phone_update_appointment"
+                            disabled
+                            label="Phone"
+                            type="text"
+                            :rules="[rules.required]"
+                            rounded
+                            outlined
+                        />
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-text-field
+                            v-model="address_update_appointment"
+                            disabled
+                            label="Address"
+                            type="text"
+                            :rules="[rules.required]"
+                            rounded
+                            outlined
+                        />
+                    </v-row>
+
                     <v-row class="ma-0 pa-0 mt-2 align-center justify-center" align="center" justify="center">
                         <v-menu
                             ref="date"
@@ -538,6 +634,364 @@
                 </v-col>
             </v-card-actions>
         </v-dialog>
+
+        <v-dialog v-model="showScheduleNextCurrentCondition" persistent width="500" class="pa-5" transition="dialog-bottom-transition" align="center" justify="center" content-class="background-dialog">
+            <p class="mt-3" style="font-size: 25px">Schedule Next Appointment</p>
+
+            <v-card-text class="ma-0 pa-0 pl-6 pr-6 mt-5">
+                <v-form ref="formScheduleNextCurrentCondition" v-model="validFormScheduleNextCurrentCondition">
+                    <v-row width="100%" class="ma-0 mt-0">
+                        <v-text-field
+                            v-model="name_next_appointment_current"
+                            disabled
+                            label="Name"
+                            type="text"
+                            :rules="[rules.required]"
+                            rounded
+                            outlined
+                        />
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-text-field
+                            v-model="email_next_appointment_current"
+                            disabled
+                            label="Email"
+                            type="email"
+                            :rules="[rules.required, rules.email]"
+                            rounded
+                            outlined
+                        />
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-text-field
+                            v-model="phone_next_appointment_current"
+                            disabled
+                            label="Phone"
+                            type="text"
+                            :rules="[rules.required]"
+                            rounded
+                            outlined
+                        />
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-text-field
+                            v-model="address_next_appointment_current"
+                            disabled
+                            label="Address"
+                            type="text"
+                            :rules="[rules.required]"
+                            rounded
+                            outlined
+                        />
+                    </v-row>
+
+                    <v-row class="ma-0 pa-0 mt-2 align-center justify-center" align="center" justify="center">
+                        <v-menu
+                            ref="date"
+                            v-model="datePickerVisible"
+                            :close-on-content-click="false"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                            class="ma-0 pa-0 align-center justify-center"
+                        >
+                            <template #activator="{ on, attrs }">
+                                <v-text-field
+                                    v-model="date_next_appointment_current"
+                                    rounded
+                                    label="Date"
+                                    style="border: 0.5px solid black !important; border-radius: 50px; height: 56px;"
+                                    v-bind="attrs"
+                                    readonly
+                                    v-on="on"
+                                    @click="date = true"
+                                    @input="datePickerVisible = false"
+                                    :rules="[rules.required]"
+                                    class="ma-0 pa-0"
+                                >
+                                    <template #append>
+                                        <v-row class="ma-0 pa-0 d-flex align-center schedule-icon-calendar" @click="openDatePicker">
+                                            <img src="../../assets/home/nav/schedule.svg" width="30px" class="ma-0 pa-0" style="cursor: pointer;" />
+                                        </v-row>
+                                    </template>
+                                </v-text-field>
+                            </template>
+
+                            <v-date-picker
+                                v-model="date_next_appointment_current"
+                                no-title
+                                scrollable
+                                :min="getToday()"
+                                locale="es"
+                                header-color="#ffccba"
+                                @input="closeDatePicker"
+                            />
+                        </v-menu>
+                    </v-row>
+
+                    <v-row class="ma-0 pa-0 mt-2 align-center justify-center" align="center" justify="center">
+                        <v-menu
+                            ref="time"
+                            v-model="clockPickerVisible"
+                            :close-on-content-click="false"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                            class="ma-0 pa-0 align-center justify-center"
+                        >
+                            <template #activator="{ on, attrs }">
+                                <v-text-field
+                                    v-model="time_next_appointment_current"
+                                    rounded
+                                    label="Time"
+                                    :disabled="!date_next_appointment_current"
+                                    style="border: 0.5px solid black !important; border-radius: 50px; height: 56px;"
+                                    v-bind="attrs"
+                                    clearable
+                                    readonly
+                                    v-on="on"
+                                    @click="time = true"
+                                    @input="clockPickerVisible = false"
+                                    :rules="[rules.required]"
+                                    class="ma-0 pa-0"
+                                >
+                                    <template #append>
+                                        <v-row class="ma-0 pa-0 d-flex align-center schedule-icon-calendar" @click="openClockPicker">
+                                            <img src="../../assets/home/schdule/clock.svg" width="30px" class="ma-0 pa-0" style="cursor: pointer;" />
+                                        </v-row>
+                                    </template>
+                                </v-text-field>
+                            </template>
+
+                            <v-time-picker
+                                v-model="time_next_appointment_current"
+                                :allowed-hours="availableAllHours"
+                                :allowed-minutes="availableAllMinutes"
+                                class="mt-4"
+                                format="24hr"
+                                scrollable
+                                header-color="#ffccba"
+                                :disabled="!date_next_appointment_current"
+                                min="9:00"
+                                max="19:30"
+                                @click:hour="availableMinutes"
+                                @click="availableHours"
+                                @input="closeClockPicker"
+                            />
+                        </v-menu>
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-combobox
+                            :rules="[rules.required]"
+                            class="ma-0 pa-0"
+                            v-model="room_next_appointment_current"
+                            :items="rooms"
+                            clearable
+                            outlined
+                            rounded
+                            label="Room"
+                        />
+                    </v-row>
+                </v-form>
+            </v-card-text>
+
+            <v-card-actions class="ma-0 pa-0">
+                <v-col cols="6">
+                    <v-btn block rounded color="#ffaa92" class="ma-0 pa-6 mt-10" @click="showScheduleNextCurrentCondition = false">
+                        <span class="ma-0 pa-0 dashboard-dialog-button-text">Cancel</span>
+                    </v-btn>
+                </v-col>
+
+                <v-col cols="6">
+                    <v-btn block rounded color="#ffaa92" class="ma-0 pa-6 mt-10" @click="scheduleNextAppointmentCurrentCondition ()">
+                        <span class="ma-0 pa-0 dashboard-dialog-button-text">Schedule</span>
+                    </v-btn>
+                </v-col>
+            </v-card-actions>
+        </v-dialog>
+
+        <v-dialog v-model="showScheduleNextRecent" persistent width="500" class="pa-5" transition="dialog-bottom-transition" align="center" justify="center" content-class="background-dialog">
+            <p class="mt-3" style="font-size: 25px">Schedule Next Appointment</p>
+
+            <v-card-text class="ma-0 pa-0 pl-6 pr-6 mt-5">
+                <v-form ref="formScheduleNext" v-model="validFormScheduleNextRecent">
+                    <v-row width="100%" class="ma-0 mt-0">
+                        <v-text-field
+                            v-model="name_next_appointment_recent"
+                            disabled
+                            label="Name"
+                            type="text"
+                            :rules="[rules.required]"
+                            rounded
+                            outlined
+                        />
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-text-field
+                            v-model="email_next_appointment_recent"
+                            disabled
+                            label="Email"
+                            type="email"
+                            :rules="[rules.required, rules.email]"
+                            rounded
+                            outlined
+                        />
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-text-field
+                            v-model="phone_next_appointment_recent"
+                            disabled
+                            label="Phone"
+                            type="text"
+                            :rules="[rules.required]"
+                            rounded
+                            outlined
+                        />
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-text-field
+                            v-model="address_next_appointment_recent"
+                            disabled
+                            label="Address"
+                            type="text"
+                            :rules="[rules.required]"
+                            rounded
+                            outlined
+                        />
+                    </v-row>
+
+                    <v-row class="ma-0 pa-0 mt-2 align-center justify-center" align="center" justify="center">
+                        <v-menu
+                            ref="date"
+                            v-model="datePickerVisible"
+                            :close-on-content-click="false"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                            class="ma-0 pa-0 align-center justify-center"
+                        >
+                            <template #activator="{ on, attrs }">
+                                <v-text-field
+                                    v-model="date_next_appointment_recent"
+                                    rounded
+                                    label="Date"
+                                    style="border: 0.5px solid black !important; border-radius: 50px; height: 56px;"
+                                    v-bind="attrs"
+                                    readonly
+                                    v-on="on"
+                                    @click="date = true"
+                                    @input="datePickerVisible = false"
+                                    :rules="[rules.required]"
+                                    class="ma-0 pa-0"
+                                >
+                                    <template #append>
+                                        <v-row class="ma-0 pa-0 d-flex align-center schedule-icon-calendar" @click="openDatePicker">
+                                            <img src="../../assets/home/nav/schedule.svg" width="30px" class="ma-0 pa-0" style="cursor: pointer;" />
+                                        </v-row>
+                                    </template>
+                                </v-text-field>
+                            </template>
+
+                            <v-date-picker
+                                v-model="date_next_appointment_recent"
+                                no-title
+                                scrollable
+                                :min="getToday()"
+                                locale="es"
+                                header-color="#ffccba"
+                                @input="closeDatePicker"
+                            />
+                        </v-menu>
+                    </v-row>
+
+                    <v-row class="ma-0 pa-0 mt-2 align-center justify-center" align="center" justify="center">
+                        <v-menu
+                            ref="time"
+                            v-model="clockPickerVisible"
+                            :close-on-content-click="false"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                            class="ma-0 pa-0 align-center justify-center"
+                        >
+                            <template #activator="{ on, attrs }">
+                                <v-text-field
+                                    v-model="time_next_appointment_recent"
+                                    rounded
+                                    label="Time"
+                                    :disabled="!date_next_appointment_recent"
+                                    style="border: 0.5px solid black !important; border-radius: 50px; height: 56px;"
+                                    v-bind="attrs"
+                                    clearable
+                                    readonly
+                                    v-on="on"
+                                    @click="time = true"
+                                    @input="clockPickerVisible = false"
+                                    :rules="[rules.required]"
+                                    class="ma-0 pa-0"
+                                >
+                                    <template #append>
+                                        <v-row class="ma-0 pa-0 d-flex align-center schedule-icon-calendar" @click="openClockPicker">
+                                            <img src="../../assets/home/schdule/clock.svg" width="30px" class="ma-0 pa-0" style="cursor: pointer;" />
+                                        </v-row>
+                                    </template>
+                                </v-text-field>
+                            </template>
+
+                            <v-time-picker
+                                v-model="time_next_appointment_recent"
+                                :allowed-hours="availableAllHours"
+                                :allowed-minutes="availableAllMinutes"
+                                class="mt-4"
+                                format="24hr"
+                                scrollable
+                                header-color="#ffccba"
+                                :disabled="!date_next_appointment_recent"
+                                min="9:00"
+                                max="19:30"
+                                @click:hour="availableMinutes"
+                                @click="availableHours"
+                                @input="closeClockPicker"
+                            />
+                        </v-menu>
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-combobox
+                            :rules="[rules.required]"
+                            class="ma-0 pa-0"
+                            v-model="room_next_appointment_recent"
+                            :items="rooms"
+                            clearable
+                            outlined
+                            rounded
+                            label="Room"
+                        />
+                    </v-row>
+                </v-form>
+            </v-card-text>
+
+            <v-card-actions class="ma-0 pa-0">
+                <v-col cols="6">
+                    <v-btn block rounded color="#ffaa92" class="ma-0 pa-6 mt-10" @click="showScheduleNextRecent = false">
+                        <span class="ma-0 pa-0 dashboard-dialog-button-text">Cancel</span>
+                    </v-btn>
+                </v-col>
+
+                <v-col cols="6">
+                    <v-btn block rounded color="#ffaa92" class="ma-0 pa-6 mt-10" @click="scheduleNextAppointmentRecent  ()">
+                        <span class="ma-0 pa-0 dashboard-dialog-button-text">Schedule</span>
+                    </v-btn>
+                </v-col>
+            </v-card-actions>
+        </v-dialog>
     </div>
 </template>
 
@@ -553,13 +1007,17 @@ export default {
             doctors: [],
             schedules: [],
             scheduleNext: [],
-            schedulePrev: [],
+            scheduleRecent: [],
             medications: [],
             recent_activity: [],
             schedule_details: [],
             idDelete: '',
             showDelete: false,
             showUpdate: false,
+            name_update_appointment: null,
+            email_update_appointment: null,
+            phone_update_appointment: null,
+            address_update_appointment: null,
             date_update_appointment: '',
             time_update_appointment: '',
             room_update_appointment: null,
@@ -598,13 +1056,31 @@ export default {
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     return pattern.test(value) || 'Invalid e-mail.'
                 }
-            }
+            },
+            showScheduleNextCurrentCondition: false,
+            validFormScheduleNextCurrentCondition: false,
+            name_next_appointment_current: null,
+            email_next_appointment_current: null,
+            phone_next_appointment_current: null,
+            address_next_appointment_current: null,
+            date_next_appointment_current: '',
+            time_next_appointment_current: '',
+            room_next_appointment_current: null,
+            showScheduleNextRecent: false,
+            validFormScheduleNextRecent: false,
+            name_next_appointment_recent: null,
+            email_next_appointment_recent: null,
+            phone_next_appointment_recent: null,
+            address_next_appointment_recent: null,
+            date_next_appointment_recent: '',
+            time_next_appointment_recent: '',
+            room_next_appointment_recent: null
         }
     },
     computed: {
         total () {
             const baseAmount = Number(this.medicare)
-            const additionalAmount = this.schedulePrev.patient ? 100 : 0
+            const additionalAmount = this.scheduleRecent.patient ? 100 : 0
 
             return (baseAmount + additionalAmount).toFixed(2)
         }
@@ -615,11 +1091,18 @@ export default {
         this.fetchAllSchedulesDetails()
         this.fetchAllSchedules()
         this.fetchAllChanges()
+        this.checkAppointments()
 
         this.medicare = localStorage.getItem('TotalPrice')
     },
     watch: {
         date_update_appointment (newDate) {
+            this.fetchAvailableTimes(newDate)
+        },
+        date_next_appointment_recent (newDate) {
+            this.fetchAvailableTimes(newDate)
+        },
+        date_next_appointment_current (newDate) {
             this.fetchAvailableTimes(newDate)
         }
     },
@@ -735,19 +1218,13 @@ export default {
                 })
         },
         findNextAppointment () {
-            const currentTimeISO = this.getToday()
-
-            console.log('@ Keyla => currentTimeISO ', currentTimeISO)
+            const currentTime = new Date().getTime()
 
             const futureAppointments = this.schedules.filter(schedule => {
-                const scheduleDateTime = new Date(schedule.date.split('/').reverse().join('-') + 'T' + schedule.time + ':00').toISOString()
+                const scheduleDateTime = new Date(schedule.date.split('/').reverse().join('-') + 'T' + schedule.time + ':00').getTime()
 
-                const currentDateTime = new Date(currentTimeISO).toISOString()
-
-                return scheduleDateTime > currentDateTime
+                return scheduleDateTime > currentTime
             })
-
-            console.log('@ Keyla => order Appointments ', futureAppointments)
 
             if (futureAppointments.length > 0) {
                 futureAppointments.sort((a, b) => {
@@ -764,6 +1241,11 @@ export default {
 
                 this.scheduleNext = nextAppointment
 
+                this.name_update_appointment = this.scheduleNext.patient.name
+                this.email_update_appointment = this.scheduleNext.patient.email
+                this.phone_update_appointment = this.scheduleNext.patient.phone
+                this.address_update_appointment = this.scheduleNext.patient.address
+
                 return this.scheduleNext
             } else {
                 console.log('@ Keyla => No hay citas futuras disponibles')
@@ -773,56 +1255,50 @@ export default {
         },
         findPrevAppointment () {
             const currentTime = new Date()
-            const currentTimeMinus15 = new Date(currentTime.getTime() - 15 * 60000)
-            const currentTimePlus30 = new Date(currentTime.getTime() + 30 * 60000)
+            const currentTimeMinus15 = new Date(Date.now() - 15 * 60000)
+            const currentTimePlus15 = new Date(Date.now() + 15 * 60000)
 
             const prevAppointments = this.schedules.filter(schedule => {
-                const scheduleDateTime = new Date(schedule.date.split('/').reverse().join('-') + 'T' + schedule.time + ':00')
-                return scheduleDateTime < currentTime && scheduleDateTime >= currentTimeMinus15
+                const scheduleStartDateTime = new Date(schedule.date.split('/').reverse().join('-') + 'T' + schedule.time + ':00')
+                const scheduleEndDateTime = new Date(scheduleStartDateTime.getTime() + 30 * 60000)
+                return scheduleEndDateTime >= currentTimeMinus15 && scheduleEndDateTime <= currentTimePlus15
+            })
+
+            const currentAppointments = this.schedules.filter(schedule => {
+                const scheduleStartDateTime = new Date(schedule.date.split('/').reverse().join('-') + 'T' + schedule.time + ':00')
+                const scheduleEndDateTime = new Date(schedule.date.split('/').reverse().join('-') + 'T' + schedule.time + ':00')
+                scheduleEndDateTime.setMinutes(scheduleEndDateTime.getMinutes() + 30)
+
+                return scheduleStartDateTime <= currentTimePlus15 && scheduleEndDateTime >= currentTime
             })
 
             if (prevAppointments.length > 0) {
-                prevAppointments.sort((a, b) => {
-                    if (a.date !== b.date) {
-                        return b.date.localeCompare(a.date)
-                    } else {
-                        return b.time.localeCompare(a.time)
-                    }
-                })
+                const appointment = prevAppointments[0]
+                this.scheduleRecent = appointment
+                this.name_next_appointment_recent = appointment.patient.name
+                this.email_next_appointment_recent = appointment.patient.email
+                this.phone_next_appointment_recent = appointment.patient.phone
+                this.address_next_appointment_recent = appointment.patient.address
 
-                const prevAppointment = prevAppointments[0]
+                console.log('cita prev 15')
 
-                console.log('@ Keyla => Previous Appointment ', prevAppointment)
+                return this.scheduleRecent
+            }
 
-                this.schedulePrev = prevAppointment
-                return this.schedulePrev
-            } else {
-                const prevAppointments = this.schedules.filter(schedule => {
-                    const scheduleDateTime = new Date(schedule.date.split('/').reverse().join('-') + 'T' + schedule.time + ':00')
-                    return scheduleDateTime > currentTime && scheduleDateTime <= currentTimePlus30
-                })
+            if (currentAppointments.length > 0) {
+                const appointment = currentAppointments[0]
+                this.scheduleRecent = appointment
+                this.name_next_appointment_recent = appointment.patient.name
+                this.email_next_appointment_recent = appointment.patient.email
+                this.phone_next_appointment_recent = appointment.patient.phone
+                this.address_next_appointment_recent = appointment.patient.address
 
-                if (prevAppointments.length > 0) {
-                    prevAppointments.sort((a, b) => {
-                        if (a.date !== b.date) {
-                            return a.date.localeCompare(b.date)
-                        } else {
-                            return a.time.localeCompare(b.time)
-                        }
-                    })
+                console.log('cita current')
 
-                    const prevAppointment = prevAppointments[0]
-
-                    console.log('@ Keyla => Next Appointment ', prevAppointment)
-
-                    this.schedulePrev = prevAppointment
-
-                    return this.schedulePrev
-                }
+                return this.scheduleRecent
             }
 
             console.log('@ Keyla => No hay citas en el rango de tiempo especificado')
-
             return null
         },
         cancelBooking (id) {
@@ -894,11 +1370,31 @@ export default {
 
                         console.log('@ Keyla => Doctor schedules details ', this.schedules_details)
 
-                        this.medications = this.schedules_details.sort((a, b) => new Date(b.date) - new Date(a.date))
+                        const currentTime = new Date().getTime()
 
-                        console.log('@ Keyla => Last schedules details', this.medications)
+                        this.medications = this.schedules_details.filter(scheduleDetails => {
+                            const scheduleDateTime = new Date(scheduleDetails.schedule.date.split('/').reverse().join('-') + 'T' + scheduleDetails.schedule.time + ':00').getTime()
+                            return scheduleDateTime < currentTime
+                        })
+
+                        if (this.medications.length > 0) {
+                            this.medications.sort((a, b) => {
+                                const dateTimeA = new Date(a.schedule.date.split('/').reverse().join('-') + 'T' + a.schedule.time + ':00').getTime()
+                                const dateTimeB = new Date(b.schedule.date.split('/').reverse().join('-') + 'T' + b.schedule.time + ':00').getTime()
+                                return dateTimeB - dateTimeA
+                            })
+                        }
+
+                        console.log('@ Keyla => Medication order', this.medications)
 
                         this.schedule_details = this.medications[0]
+
+                        this.doctor_email_appointment_current = this.schedule_details.email_doctor
+                        this.name_next_appointment_current = this.schedule_details.patient.name
+                        this.email_next_appointment_current = this.schedule_details.patient.email
+                        this.phone_next_appointment_current = this.schedule_details.patient.phone
+                        this.address_next_appointment_current = this.schedule_details.patient.address
+
                         console.log('@ Keyla => Last details', this.schedule_details)
                     }
                 })
@@ -1113,7 +1609,177 @@ export default {
                     this.showAlert = false
                 }, 3000)
             }
+        },
+        async scheduleNextAppointmentRecent () {
+            if (this.$refs.formScheduleNext.validate()) {
+                const url = '/register-schedule'
+                const data = {
+                    email_doctor: this.doctor_email,
+                    name_patient: this.name_next_appointment_recent,
+                    email_patient: this.email_next_appointment_recent,
+                    phone_patient: this.phone_next_appointment_recent,
+                    address_patient: this.address_next_appointment_recent,
+                    date: this.date_next_appointment_recent,
+                    time: this.time_next_appointment_recent,
+                    room: this.room_next_appointment_recent
+                }
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${this.token}`
+                    }
+                }
+
+                console.log('data', data)
+
+                this.$axios.post(url, data, config)
+                    .then((res) => {
+                        console.log('@ Keyla => Response ', res)
+
+                        if (res.data.message === 'Schedule registered successfully') {
+                            this.showAlert = true
+                            this.alertText = res.data.message
+                            this.alertColor = '#6CDACE'
+                            this.alertType = 'success'
+
+                            this.fetchAllSchedules()
+                            this.fetchAllChanges()
+                            this.showScheduleNextRecent = false
+
+                            setTimeout(() => {
+                                this.showAlert = false
+                            }, 3000)
+
+                            this.$refs.formAppointment.reset()
+                        }
+                    })
+                    .catch((err) => {
+                        console.log('@ Keyla => Error Frontend', err)
+
+                        if (err.response && err.response.data && err.response.data.message) {
+                            this.showAlert = true
+                            this.alertText = err.response.data.message
+                            this.alertColor = '#FF9F8E'
+                            this.alertType = 'warning'
+                        }
+
+                        setTimeout(() => {
+                            this.showAlert = false
+                        }, 3000)
+
+                        this.name_appointment = null
+                        this.email_appointment = null
+                        this.phone_appointment = null
+                        this.address_appointment = null
+                        this.date_appointment = null
+                        this.time_appointment = null
+                        this.room_appointment = null
+                    })
+            } else {
+                console.log('@ Keyla => Missing fields')
+
+                this.showAlert = true
+                this.alertText = 'Missing fields'
+                this.alertColor = '#FF9F8E'
+                this.alertType = 'warning'
+
+                setTimeout(() => {
+                    this.showAlert = false
+                }, 3000)
+            }
+        },
+        async scheduleNextAppointmentCurrentCondition () {
+            if (this.$refs.formScheduleNextCurrentCondition.validate()) {
+                const url = '/register-schedule'
+                const data = {
+                    email_doctor: this.doctor_email_appointment_current,
+                    name_patient: this.name_next_appointment_current,
+                    email_patient: this.email_next_appointment_current,
+                    phone_patient: this.phone_next_appointment_current,
+                    address_patient: this.address_next_appointment_current,
+                    date: this.date_next_appointment_current,
+                    time: this.time_next_appointment_current,
+                    room: this.room_next_appointment_current
+                }
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${this.token}`
+                    }
+                }
+
+                console.log('data', data)
+
+                this.$axios.post(url, data, config)
+                    .then((res) => {
+                        console.log('@ Keyla => Response ', res)
+
+                        if (res.data.message === 'Schedule registered successfully') {
+                            this.showAlert = true
+                            this.alertText = res.data.message
+                            this.alertColor = '#6CDACE'
+                            this.alertType = 'success'
+
+                            this.fetchAllSchedules()
+                            this.fetchAllChanges()
+                            this.showScheduleNextCurrentCondition = false
+
+                            setTimeout(() => {
+                                this.showAlert = false
+                            }, 3000)
+
+                            this.$refs.formScheduleNextCurrentCondition.reset()
+                        }
+                    })
+                    .catch((err) => {
+                        console.log('@ Keyla => Error Frontend', err)
+
+                        if (err.response && err.response.data && err.response.data.message) {
+                            this.showAlert = true
+                            this.alertText = err.response.data.message
+                            this.alertColor = '#FF9F8E'
+                            this.alertType = 'warning'
+                        }
+
+                        setTimeout(() => {
+                            this.showAlert = false
+                        }, 3000)
+
+                        this.date_appoidate_next_appointment_currentntment = null
+                        this.time_next_appointment_current = null
+                        this.room_room_next_appointment_currentappointment = null
+                    })
+            } else {
+                console.log('@ Keyla => Missing fields')
+
+                this.showAlert = true
+                this.alertText = 'Missing fields'
+                this.alertColor = '#FF9F8E'
+                this.alertType = 'warning'
+
+                setTimeout(() => {
+                    this.showAlert = false
+                }, 3000)
+            }
+        },
+        checkAppointments () {
+            const now = new Date()
+            const nextHour = now.getHours() + 1
+            const nextHourTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), nextHour, 0, 0, 0)
+            const nextQuarterHour = Math.ceil(now.getMinutes() / 15) * 15
+            const nextCheckTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), nextQuarterHour, 0, 0)
+
+            const waitTimeUntilNextHour = nextHourTime - now
+
+            const waitTimeUntilNextQuarterHour = nextCheckTime - now
+
+            setTimeout(() => {
+                setInterval(checkAppointments, 15 * 60 * 1000)
+            }, waitTimeUntilNextHour)
+
+            setTimeout(() => {
+                checkAppointments()
+            }, waitTimeUntilNextQuarterHour)
         }
+
     }
 }
 </script>

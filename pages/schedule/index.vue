@@ -216,6 +216,7 @@
                                             locale="es"
                                             header-color="#ffccba"
                                             @input="closeDatePicker"
+                                            class="ma-0 pa-0"
                                         />
                                     </v-menu>
                                 </v-row>
@@ -258,7 +259,7 @@
                                             v-model="time_appointment"
                                             :allowed-hours="availableAllHours"
                                             :allowed-minutes="availableAllMinutes"
-                                            class="mt-4"
+                                            class="ma-0 pa-0"
                                             format="24hr"
                                             scrollable
                                             header-color="#ffccba"
