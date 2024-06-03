@@ -374,7 +374,35 @@
     align-content: center !important;
     align-items: center !important;
 }
-    
+
+.dashboard-current-condition-btn-schedule
+{
+    border-radius: 50px !important; 
+    background-color: transparent !important; 
+    text-transform: none !important; 
+    letter-spacing: normal !important;
+}
+
+.dashboard-recent-bills-btn-schedule
+{
+    border: 1px solid #575757 !important; 
+    border-radius: 50px !important; 
+    background-color: transparent !important; 
+    text-transform: none !important; 
+    letter-spacing: normal !important;
+}
+
+.dashboard-recent-bills-btn-schedule-title
+{
+    font-size: 13px !important; 
+    font-weight: 600 !important;
+}
+
+.dashboard-recent-bills-btn-schedule-text
+{
+    font-size: 13px !important;
+}
+
 .schedule-icon-calendar
 {
     position: absolute !important;
