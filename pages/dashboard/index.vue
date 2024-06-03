@@ -17,7 +17,7 @@
                         <v-col cols="1" class="ma-0 pa-0" />
 
                         <v-col class="ma-0 pa-0">
-                            <v-btn rounded color="#ffaa92" to="/" class="ma-0 pa-5 pt-7 pb-7">
+                            <v-btn rounded color="#ffaa92" @click="showSignUp = true" class="ma-0 pa-5 pt-7 pb-7">
                                 <p class="ma-0 pa-0 button-secondary">Sign Up</p>
                             </v-btn>
                         </v-col>
@@ -992,6 +992,52 @@
                 </v-col>
             </v-card-actions>
         </v-dialog>
+
+        <v-dialog v-model="showSignUp" persistent width="500" class="ma-0 pa-0 d-flex flex-column justify-center" transition="dialog-bottom-transition" align="center" justify="center" content-class="background-dialog">
+            <p class="mt-8" style="font-size: 35px">Doctor Registration</p>
+
+            <v-card-text class="ma-0 pa-0 pl-6 pr-6 mt-5">
+                <v-form ref="formSignUp" v-model="validFormSignUp">
+                    <v-row width="100%" class="ma-0 mt-0">
+                        <v-file-input :rules="[rules.required]" v-model="photo_signup" accept="image/png, image/jpeg" prepend-icon="" append-icon="mdi-camera" label="Photo" rounded outlined />
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-text-field :rules="[rules.required]" v-model="name_signup" label="Name" type="text" rounded outlined/>
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-combobox height="56px" :rules="[rules.required]" class="ma-0 pa-0 d-flex align-center justify-center" v-model="specialist_signup" :items="specialties_signup" multiple clearable outlined rounded dense chips label="Specialist" />
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-combobox height="56px" :rules="[rules.required]" v-model="degree_signup" :items="degrees_signup" multiple clearable outlined rounded dense chips label="Degree" />
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-text-field :rules="[rules.required, rules.email]" v-model="email_signup" label="Correo" type="email" rounded outlined/>
+                    </v-row>
+
+                    <v-row width="100%" class="ma-0 mt-2">
+                        <v-text-field :rules="[rules.required]" v-model="password_signup" label="Password" type="password" rounded outlined />
+                    </v-row>
+                </v-form>
+            </v-card-text>
+
+            <v-card-actions class="ma-0 pa-0 pl-4 pr-4 mt-5">
+                <v-col cols="6" class="ma-0 mt-0">
+                    <v-btn block rounded color="#ffaa92" class="ma-0 pa-6" @click="showSignUp = false">
+                        <span style="text-transform: none; color: white; font-size: 15px; font-weight :bold;">Cancel</span>
+                    </v-btn>
+                </v-col>
+
+                <v-col cols="6" class="ma-0 mt-0">
+                    <v-btn block rounded color="#ffaa92" class="ma-0 pa-6" @click="registerDoctor ()">
+                        <span style="text-transform: none; color: white; font-size: 15px; font-weight :bold;">Register</span>
+                    </v-btn>
+                </v-col>
+            </v-card-actions>
+        </v-dialog>
     </div>
 </template>
 
@@ -1074,7 +1120,37 @@ export default {
             address_next_appointment_recent: null,
             date_next_appointment_recent: '',
             time_next_appointment_recent: '',
-            room_next_appointment_recent: null
+            room_next_appointment_recent: null,
+            showSignUp: false,
+            validFormSignUp: false,
+            photo_signup: null,
+            name_signup: null,
+            specialist_signup: [],
+            degree_signup: [],
+            email_signup: null,
+            password_signup: null,
+            specialties_signup: [
+                'General Surgeon',
+                'Cardiothoracic Surgeon',
+                'Neurosurgeon',
+                'Orthopedic Surgeon',
+                'Plastic Surgeon',
+                'Urologist',
+                'Ophthalmologist',
+                'Otolaryngologist',
+                'Gynecological Surgeon',
+                'Pediatric Surgeon',
+                'Colon and Rectal Surgeon',
+                'Vascular Surgeon',
+                'Transplant Surgeon',
+                'Maxillofacial Surgeon',
+                'Hand Surgeon',
+                'Trauma Surgeon'
+            ],
+            degrees_signup: [
+                'MBBS',
+                'MS'
+            ]
         }
     },
     computed: {
@@ -1778,8 +1854,77 @@ export default {
             setTimeout(() => {
                 checkAppointments()
             }, waitTimeUntilNextQuarterHour)
-        }
+        },
+        async registerDoctor () {
+            if (this.$refs.formSignUp.validate()) {
+                const url = '/register-doctor'
+                const data = new FormData()
 
+                console.log('specialist', this.specialist_signup)
+                console.log('degree', this.degree_signup)
+
+                data.append('photo', this.photo_signup)
+                data.append('name', this.name_signup)
+                data.append('specialist', this.specialist_signup)
+                data.append('degree', this.degree_signup)
+                data.append('email', this.email_signup)
+                data.append('password', this.password_signup)
+
+                console.log('photo signup', this.photo_signup)
+
+                this.$axios.post(url, data)
+                    .then((res) => {
+                        console.log('@ Keyla => Response ', res)
+
+                        if (res.data.message === 'Doctor registered successfully') {
+                            this.showSignUp = false
+                            this.showAlert = true
+                            this.alertText = res.data.message
+                            this.alertColor = '#6CDACE'
+                            this.alertType = 'success'
+
+                            setTimeout(() => {
+                                this.showAlert = false
+                                this.$router.push('/')
+                            }, 3000)
+
+                            this.$refs.formSignUp.reset()
+                        }
+                    })
+                    .catch((err) => {
+                        console.log('@ Keyla => Error Frontend', err)
+
+                        if (err.response && err.response.data && err.response.data.message) {
+                            this.showAlert = true
+                            this.alertText = err.response.data.message
+                            this.alertColor = '#FF9F8E'
+                            this.alertType = 'warning'
+                        }
+
+                        setTimeout(() => {
+                            this.showAlert = false
+                        }, 3000)
+
+                        this.photo = null
+                        this.name = null
+                        this.specialist = []
+                        this.degree = []
+                        this.email = null
+                        this.password = null
+                    })
+            } else {
+                console.log('@ Keyla => Missing fields')
+
+                this.showAlert = true
+                this.alertText = 'Missing fields'
+                this.alertColor = '#FF9F8E'
+                this.alertType = 'warning'
+
+                setTimeout(() => {
+                    this.showAlert = false
+                }, 3000)
+            }
+        }
     }
 }
 </script>
