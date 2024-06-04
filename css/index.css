@@ -702,6 +702,7 @@
 {
     border-top: 0.5px solid #575757 !important;
     background-color: transparent !important;
+    overflow-y: hidden !important;
 }
 
 .laboratoty-table td, .laboratoty-table tbody, .laboratoty-table tr
