@@ -264,8 +264,6 @@
                                             scrollable
                                             header-color="#ffccba"
                                             :disabled="!date_appointment"
-                                            min="9:00"
-                                            max="19:30"
                                             @click:hour="availableMinutes"
                                             @click="availableHours"
                                             @input="closeClockPicker"
@@ -420,7 +418,9 @@ export default {
             show_schedules_yesterday: false,
             show_schedules_today: false,
             show_schedules_tomorrow: false,
-            token: ''
+            token: '',
+            dateCurrent: '',
+            sectionCurrent: ''
         }
     },
     watch: {
@@ -434,6 +434,8 @@ export default {
 
         console.log('token', this.token)
         console.log('doctor', this.doctor)
+
+        this.sectionCurrent = 'All'
 
         this.getDoctors()
         this.getPatients()
@@ -497,6 +499,9 @@ export default {
 
                         this.schedulesDate = this.updateSchedules(this.getToday())
                         console.log('@ Keyla => Schedules Date:', this.schedules)
+
+                        console.log('current ', this.sectionCurrent)
+                        this.toggleSection(this.sectionCurrent)
                     }
                 })
                 .catch((err) => {
@@ -506,6 +511,8 @@ export default {
         updateSchedules (date) {
             this.schedulesDate = this.schedules.filter(schedule => schedule.date === date)
 
+            this.dateCurrent = this.schedulesDate.date
+
             console.log('@ Keyla => Filtered Schedules for', date, this.schedulesDate)
         },
         toggleSection (section) {
@@ -514,14 +521,24 @@ export default {
             this.show_schedules_today = false
             this.show_schedules_tomorrow = false
 
+            this.sectionCurrent = section
+
+            console.log('current togle ', this.sectionCurrent)
+
             if (section === 'All') {
                 this.show_all_schedules = true
             } else if (section === 'Yesterday') {
                 this.show_schedules_yesterday = true
+
+                this.updateSchedules(this.getYesterday())
             } else if (section === 'Today') {
                 this.show_schedules_today = true
+
+                this.updateSchedules(this.getToday())
             } else if (section === 'Tomorrow') {
                 this.show_schedules_tomorrow = true
+
+                this.updateSchedules(this.getTomorrow())
             }
         },
         registerPatient () {
@@ -759,6 +776,7 @@ export default {
                             }, 3000)
 
                             this.$refs.formAppointment.reset()
+                            this.time_appointment = ''
                         }
                     })
                     .catch((err) => {
