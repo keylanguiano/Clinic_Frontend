@@ -149,7 +149,7 @@
 
                                     <v-row class="ma-0 pa-0 mt-3">
                                         <v-col cols="6" class="ma-0 pa-0">
-                                            <v-btn color="transparent" rounded elevation="0" class="ma-0 pa-0 px-1 dashboard-appointment-button" @click="cancelBooking (schedule.id)">
+                                            <v-btn color="transparent" rounded elevation="0" class="ma-0 pa-0 px-1 dashboard-appointment-button" @click="cancelBooking (scheduleNext.id)">
                                                 <v-col cols="2" class="ma-0 pa-0">
                                                     <v-row class="ma-0 pa-0">
                                                         <img width="20" class="ma-0 pa-0" src="../../assets/home/dashboard/cancel.svg" />
@@ -449,7 +449,7 @@
                 </v-col>
 
                 <v-col cols="6">
-                    <v-btn block rounded color="#ffaa92" class="ma-0 pa-6 mt-10" @click="deleteAppointment (schedule.id)">
+                    <v-btn block rounded color="#ffaa92" class="ma-0 pa-6 mt-10" @click="deleteAppointment (scheduleNext.id)">
                         <span class="ma-0 pa-0 dashboard-dialog-button-text">Delete</span>
                     </v-btn>
                 </v-col>
@@ -512,7 +512,7 @@
                     <v-row class="ma-0 pa-0 mt-2 align-center justify-center" align="center" justify="center">
                         <v-menu
                             ref="date"
-                            v-model="datePickerVisible"
+                            v-model="datePickerVisibleUp"
                             :close-on-content-click="false"
                             transition="scale-transition"
                             offset-y
@@ -529,7 +529,7 @@
                                     readonly
                                     v-on="on"
                                     @click="date = true"
-                                    @input="datePickerVisible = false"
+                                    @input="datePickerVisibleUp = false"
                                     :rules="[rules.required]"
                                     class="ma-0 pa-0"
                                 >
@@ -548,7 +548,7 @@
                                 :min="getToday()"
                                 locale="es"
                                 header-color="#ffccba"
-                                @input="closeDatePicker"
+                                @input="closeDatePickerUp"
                             />
                         </v-menu>
                     </v-row>
@@ -556,7 +556,7 @@
                     <v-row class="ma-0 pa-0 mt-2 align-center justify-center" align="center" justify="center">
                         <v-menu
                             ref="time"
-                            v-model="clockPickerVisible"
+                            v-model="clockPickerVisibleUp"
                             :close-on-content-click="false"
                             transition="scale-transition"
                             offset-y
@@ -575,7 +575,7 @@
                                     readonly
                                     v-on="on"
                                     @click="time = true"
-                                    @input="clockPickerVisible = false"
+                                    @input="clockPickerVisibleUp = false"
                                     :rules="[rules.required]"
                                     class="ma-0 pa-0"
                                 >
@@ -596,11 +596,9 @@
                                 scrollable
                                 header-color="#ffccba"
                                 :disabled="!date_update_appointment"
-                                min="9:00"
-                                max="19:30"
                                 @click:hour="availableMinutes"
                                 @click="availableHours"
-                                @input="closeClockPicker"
+                                @input="closeClockPickerUp"
                             />
                         </v-menu>
                     </v-row>
@@ -691,7 +689,7 @@
                     <v-row class="ma-0 pa-0 mt-2 align-center justify-center" align="center" justify="center">
                         <v-menu
                             ref="date"
-                            v-model="datePickerVisible"
+                            v-model="datePickerVisibleNext"
                             :close-on-content-click="false"
                             transition="scale-transition"
                             offset-y
@@ -708,7 +706,7 @@
                                     readonly
                                     v-on="on"
                                     @click="date = true"
-                                    @input="datePickerVisible = false"
+                                    @input="datePickerVisibleNext = false"
                                     :rules="[rules.required]"
                                     class="ma-0 pa-0"
                                 >
@@ -727,7 +725,7 @@
                                 :min="getToday()"
                                 locale="es"
                                 header-color="#ffccba"
-                                @input="closeDatePicker"
+                                @input="closeDatePickerNext"
                             />
                         </v-menu>
                     </v-row>
@@ -735,7 +733,7 @@
                     <v-row class="ma-0 pa-0 mt-2 align-center justify-center" align="center" justify="center">
                         <v-menu
                             ref="time"
-                            v-model="clockPickerVisible"
+                            v-model="clockPickerVisibleNext"
                             :close-on-content-click="false"
                             transition="scale-transition"
                             offset-y
@@ -754,7 +752,7 @@
                                     readonly
                                     v-on="on"
                                     @click="time = true"
-                                    @input="clockPickerVisible = false"
+                                    @input="clockPickerVisibleNext = false"
                                     :rules="[rules.required]"
                                     class="ma-0 pa-0"
                                 >
@@ -775,11 +773,9 @@
                                 scrollable
                                 header-color="#ffccba"
                                 :disabled="!date_next_appointment_current"
-                                min="9:00"
-                                max="19:30"
                                 @click:hour="availableMinutes"
                                 @click="availableHours"
-                                @input="closeClockPicker"
+                                @input="closeClockPickerNext"
                             />
                         </v-menu>
                     </v-row>
@@ -954,8 +950,6 @@
                                 scrollable
                                 header-color="#ffccba"
                                 :disabled="!date_next_appointment_recent"
-                                min="9:00"
-                                max="19:30"
                                 @click:hour="availableMinutes"
                                 @click="availableHours"
                                 @input="closeClockPicker"
@@ -1080,6 +1074,10 @@ export default {
                 '9',
                 '10'
             ],
+            datePickerVisibleUp: false,
+            clockPickerVisibleUp: false,
+            datePickerVisibleNext: false,
+            clockPickerVisibleNext: false,
             datePickerVisible: false,
             clockPickerVisible: false,
             availableTimes: [],
@@ -1326,7 +1324,9 @@ export default {
             } else {
                 console.log('@ Keyla => No hay citas futuras disponibles')
 
-                return null
+                this.scheduleNext = ''
+
+                return this.scheduleNext
             }
         },
         findPrevAppointment () {
@@ -1396,6 +1396,9 @@ export default {
                     if (res.status === 204) {
                         this.showDelete = false
 
+                        this.fetchAllSchedules()
+                        this.fetchAllSchedulesDetails()
+                        this.fetchAllChanges()
                         this.findNextAppointment()
 
                         this.showAlert = true
@@ -1529,6 +1532,24 @@ export default {
                 console.error('Error fetching all changes:', error)
             }
         },
+        openDatePickerUp () {
+            this.datePickerVisibleUp = true
+        },
+        closeDatePickerUp () {
+            this.datePickerVisibleUp = false
+        },
+        openClockPickerUp () {
+            this.clockPickerVisibleUp = true
+        },
+        closeClockPickerUp () {
+            this.clockPickerVisibleUp = false
+        },
+        openClockPickerNext () {
+            this.clockPickerVisibleNext = true
+        },
+        closeClockPickerNext () {
+            this.clockPickerVisibleNext = false
+        },
         openDatePicker () {
             this.datePickerVisible = true
         },
@@ -1645,6 +1666,7 @@ export default {
 
                             this.fetchAllSchedules()
                             this.fetchAllChanges()
+                            this.scheduleNextAppointmentRecent()
 
                             this.showUpdate = false
 
